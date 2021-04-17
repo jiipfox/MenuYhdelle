@@ -18,6 +18,8 @@ public class LeftistMenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    User testUser = new User("Hillevi Hiili", "1234", 100.0);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
