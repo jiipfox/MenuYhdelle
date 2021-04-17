@@ -21,6 +21,10 @@ public class LeftistMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MainClass main = MainClass.getMain();
+        main.createMenu();
+        
         setContentView(R.layout.activity_leftist_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
