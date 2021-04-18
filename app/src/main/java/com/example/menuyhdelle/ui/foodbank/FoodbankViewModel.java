@@ -1,16 +1,16 @@
-package com.example.menuyhdelle.ui.gallery;
+package com.example.menuyhdelle.ui.foodbank;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class FoodbankViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public FoodbankViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Historia");
+        mText.setValue("Ruokapankki");
     }
 
     public LiveData<String> getText() {

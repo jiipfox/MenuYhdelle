@@ -10,11 +10,19 @@
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_settings_1"
-            android:icon="@drawable/ic_1"
-            android:title="Asetus 1" />
+            android:icon="@drawable/history"
+            android:title="Historia" />
         <item
             android:id="@+id/nav_settings_2"
-            android:icon="@drawable/ic_2"
-            android:title="Asetus 2"/>
+            android:icon="@drawable/grocery_list"
+            android:title="Ostoslista"/>
+        <item
+            android:id="@+id/nav_settings_3"
+            android:icon="@drawable/food_bank"
+            android:title="Ruokapankki"/>
+        <item
+            android:id="@id/nav_settings_4"
+            android:icon="@drawable/profile_icon"
+            android:title="Omat tiedot"/>
     </group>
 </menu>

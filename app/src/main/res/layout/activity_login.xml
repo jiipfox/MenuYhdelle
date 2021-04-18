@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity"
+    android:background="#17A0C2"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:layout_gravity="center">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/myImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_resource" />
+
+                <TextView
+                    android:id="@+id/myImageViewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/myImageView"
+                    android:layout_alignTop="@id/myImageView"
+                    android:layout_alignRight="@id/myImageView"
+                    android:layout_alignBottom="@id/myImageView"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:gravity="center"
+                    android:text="HIILIKORI"
+                    android:textColor="#FFF"
+                    android:textSize="62sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputEmail"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Käyttäjätunnus"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputPassword"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:hint="Salasana"
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:text="Unohtuiko salasana?"
+                android:textColor="#FFF"
+                android:textSize="17dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+            <Button
+                android:text="Kirjaudu sisään"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:backgroundTint="#58CFED"
+                android:textAllCaps="false"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="17sp"
+                android:layout_marginTop="20dp"
+                android:text="Luo käyttäjä"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+    </ScrollView>
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="11dp"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="30dp"/>
+</RelativeLayout>
