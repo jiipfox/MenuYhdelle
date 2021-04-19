@@ -25,6 +25,19 @@ public class LeftistMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MainClass main = MainClass.getMain();
+        main.createMenu();
+        main.createUser("Hillevi Hiili", "1234", 100.0);
+
+        if (main.loginUser("Hillevi Hiili", "12345")) {
+            String name = main.getUserName();
+            System.out.println("Login succeeded, welcome " + name);
+        }
+        else{
+            System.out.println("Login failed");
+        }
+        
         setContentView(R.layout.activity_leftist_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
