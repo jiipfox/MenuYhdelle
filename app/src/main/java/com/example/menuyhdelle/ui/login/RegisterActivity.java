@@ -2,15 +2,58 @@ package com.example.menuyhdelle.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.menuyhdelle.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    Button createUserBtn;
+    TextView alrdyHaveUser;
+    EditText editTextName, editTextUser, editTextPassword, editTextCO2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Find elements by their ID's.
+
+        createUserBtn = findViewById(R.id.createUser);
+        alrdyHaveUser = findViewById(R.id.alrdyHaveUser);
+        editTextCO2 = findViewById(R.id.editTextCO2);
+        editTextName = findViewById(R.id.editTextName);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextUser = findViewById(R.id.editTextUser);
+
+        alrdyHaveUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Change view to LoginActivity
+                changeView(v);
+            }
+        });
+
+        createUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save user to database and display toast "User successfully created" or some error
+                // if any of the fields are left unfinished.
+            }
+        });
+
+    }
+
+    // This method will change view to LoginActivity if user clicks alrdyHaveUser button.
+
+    public void changeView(View v) {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivityForResult(intent, 1);
     }
 }

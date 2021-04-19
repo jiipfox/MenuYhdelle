@@ -1,8 +1,12 @@
 package com.example.menuyhdelle;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+
+import com.example.menuyhdelle.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -53,9 +57,29 @@ public class LeftistMenuActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection from side menu.
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.log_out:
+                logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void logOut(){
+        // This "logs out" and returns to LoginActivity class.
+        Intent intent = new Intent(LeftistMenuActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
