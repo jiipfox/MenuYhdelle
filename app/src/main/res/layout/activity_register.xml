@@ -57,8 +57,37 @@
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputName"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nimi"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputCO2"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <EditText
+                    android:id="@+id/editTextCO2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="CO2 tavoite (tonnia/vuosi)"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputEmail"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
 
@@ -73,7 +102,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputPassword"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
                 <EditText
@@ -86,18 +115,9 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:text="Unohtuiko salasana?"
-                android:textColor="#FFF"
-                android:textSize="17dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-
             <Button
-                android:text="Kirjaudu sisään"
-                android:layout_marginTop="20dp"
+                android:text="Luo käyttäjä"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -110,8 +130,8 @@
                 android:textStyle="bold"
                 android:textColor="#FFF"
                 android:textSize="17sp"
-                android:layout_marginTop="20dp"
-                android:text="Luo käyttäjä"
+                android:layout_marginTop="10dp"
+                android:text="Onko sinulla jo käyttäjä?"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" />
 
