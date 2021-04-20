@@ -5,6 +5,7 @@ public class User {
     private String password = "";
     private double co2AnnualOjbective = 0.0;
     private double co2Cumulative = 0.0;
+    private static int counter;
 
     public User(String name, String pass, Double objective){
         userName = name;

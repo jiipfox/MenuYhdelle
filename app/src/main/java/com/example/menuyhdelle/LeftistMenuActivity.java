@@ -10,6 +10,9 @@ import com.example.menuyhdelle.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 public class LeftistMenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    UserLocalStorage us = new UserLocalStorage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +38,31 @@ public class LeftistMenuActivity extends AppCompatActivity {
             String name = main.getUserName();
             System.out.println("Login succeeded, welcome " + name);
         }
-        else{
+        else {
             System.out.println("Login failed");
         }
-        
+
+        // Test JSONing
+        String testUserString = us.loadJSONFromAsset(getApplicationContext());
+        System.out.println(testUserString);
+
+        ArrayList<User> allUsers =  us.JsonToUserList(testUserString);
+        System.out.println("User list size = " + allUsers.size());
+
+        // Test cryptos
+        try {
+            Krypto krypt1x = new Krypto("agentti");
+            System.out.println("Salattu viesti: ");
+            String viesti = krypt1x.encrypt("Veri sensible!");
+
+            System.out.println("Salauksen purun jälkeen: ");
+            String purettuViesti = krypt1x.decrypt(viesti);
+            System.out.println(purettuViesti);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         setContentView(R.layout.activity_leftist_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

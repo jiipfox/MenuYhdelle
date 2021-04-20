@@ -1,0 +1,14 @@
+[
+    {
+      "userName": "N.N",
+      "password": "123",
+      "co2AnnualOjbective": 100.0,
+      "co2Cumulative": 0.0
+    },
+    {
+      "userName": "E.E",
+      "password": "1234",
+      "co2AnnualOjbective": 101.0,
+      "co2Cumulative": 0.0
+    }
+  ]
