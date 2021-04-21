@@ -5,19 +5,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.foodbank.FoodbankViewModel" >
+    tools:context=".ui.foodbank.FoodbankViewModel"
+    android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/text_foodbank"
+    <RelativeLayout
+        android:id="@+id/profileBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:background="@color/purple_500"
+        android:padding="40dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        >
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_spinner_bg">
+                <Spinner
+                    android:id="@+id/foodSpinner"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:elevation="2dp"
+                    android:spinnerMode="dropdown">
+                </Spinner>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/profileBackground">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:gravity="left"
+            android:padding="40dp">
+
+            <TextView
+                android:id="@+id/foodItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nimi"
+                android:textColor="#000000"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/foodItemList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+                <Button
+                    android:id="@+id/addToListBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lisää ostoslistaan"
+                    android:backgroundTint="#17C25B"
+                    android:textAllCaps="false">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
