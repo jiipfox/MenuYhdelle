@@ -16,7 +16,7 @@ public class Menu {
     public Menu(String n) {
         this.name = n;
         System.out.println("Added menu: " + this.name);
-        this.addDish();
+        this.addDish(); 
     }
 
     // *** Methods ***

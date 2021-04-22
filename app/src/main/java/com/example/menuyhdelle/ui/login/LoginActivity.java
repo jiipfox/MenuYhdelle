@@ -2,6 +2,7 @@ package com.example.menuyhdelle.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.menuyhdelle.LeftistMenuActivity;
+import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,8 +26,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Find elements by their ID's.
+        Context c = getApplicationContext();
+        MainClass main = MainClass.getMain();
 
+        main.loadDb(getApplicationContext());
+
+        main.createNewUser("Hillevi", "Hittolainen", 100.0);
+
+        if (main.loginUser("Hillevi", "Hittolainen")) {
+            String name = main.getUserName();
+            System.out.println("Login succeeded, welcome " + name);
+        }
+        else {
+            System.out.println("Login failed");
+        }
+
+        // Find elements by their ID's.
         loginBtn = findViewById(R.id.loginButton);
         forgotPswd = findViewById(R.id.forgotPsw);
         createUser = findViewById(R.id.createUser);
