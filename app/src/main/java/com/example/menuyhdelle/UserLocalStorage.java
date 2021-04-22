@@ -28,8 +28,7 @@ public class UserLocalStorage {
 
     // Test functions
     public boolean writeJson(Context c) {
-        System.out.println("Write json to : ");
-        System.out.println(c.getFilesDir());
+        System.out.println("Write json to : " + c.getFilesDir());
         File path = c.getFilesDir();
         File file = new File(path, filename);
 
@@ -125,7 +124,8 @@ public class UserLocalStorage {
     public User loginUser(String loginName, String loginPass) {
         User user;
         boolean passOk = false;
-        System.out.println("Try to login: " + loginName + ", login pass = " + loginPass);
+        System.out.println("login=" + loginName + ", pass=" + loginPass);
+        System.out.println("size=" + userList.size());
 
         if (userList == null) {
             System.out.println("Empty user list, add more users.");
@@ -139,7 +139,8 @@ public class UserLocalStorage {
 
         for (int i = 0; i < userList.size(); i++) {
             String userName = userList.get(i).getUserName();
-            if (userName == loginName) {
+            System.out.println("User("+i+")=" + userName);
+            if (userName.equals(loginName)) {
                 System.out.println("Login user name found from index " + i);
                 passOk = verifyPassword(userList.get(i).getPassword(), loginPass);
                 if (passOk) {

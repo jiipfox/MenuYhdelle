@@ -48,7 +48,6 @@ public class MainClass {
      * @return
      */
     public boolean saveDb(Context c){
-        System.out.println("write db");
         userBackEnd.writeJson(c);
         return true;
     }

@@ -28,17 +28,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         MainClass main = MainClass.getMain();
-        main.createNewUser("Teppo3", "Hittolainen", 100.0);
+        main.createNewUser("Teppo", "123456", 100.0);
         main.saveDb(getApplicationContext());
         main.loadDb(getApplicationContext());
-
-        if (main.loginUser("Teppo3", "Hittolainen")) {
-            String name = main.getUserName();
-            System.out.println("Login succeeded, welcome " + name);
-        }
-        else {
-            System.out.println("Login failed");
-        }
 
         // Find elements by their ID's.
         loginBtn = findViewById(R.id.loginButton);
@@ -58,8 +50,19 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Login clicked");
                 // Log in
-                String text = "Kirjautuminen onnistui!";
+                String text = "Kirjautuminen epäonnistui!";
+                String name = editTextUser.getText().toString();
+                String pass = editTextPassword.getText().toString();
+
+                if (main.loginUser(name, pass)) {
+                    //String name = main.getUserName();
+                    System.out.println("Login succeeded, welcome " + name);
+                    text = "Kirjautuminen onnistui!";
+                } else{
+                    System.out.println("Login NOT succeeeded.");
+                }
                 makeToast(text);
                 loginView(v);
             }
