@@ -13,6 +13,8 @@ public class SlideshowViewModel extends ViewModel {
         mText.setValue("Ostoslista");
     }
 
+
+
     public LiveData<String> getText() {
         return mText;
     }

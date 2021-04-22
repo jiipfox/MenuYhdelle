@@ -24,11 +24,23 @@ public class FoodbankFragment extends Fragment {
         foodbankViewModel =
                 new ViewModelProvider(this).get(FoodbankViewModel.class);
         View root = inflater.inflate(R.layout.fragment_foodbank, container, false);
-        final TextView textView = root.findViewById(R.id.text_foodbank);
+        final TextView textView = root.findViewById(R.id.foodItemName);
+        final TextView foodItemList = root.findViewById(R.id.foodItemList);
         foodbankViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                textView.setText("Härkiswokki");
+                foodItemList.setText("Punasipuli 2\n" +
+                        "Porkkana 3\n" +
+                        "Valkosipulinkynsi 3\n" +
+                        "Vihreä pakaste papu 200 g\n" +
+                        "Seesaminsiemen 50 g\n" +
+                        "Täysjyvänuudeli 200 g\n" +
+                        "Rypsiöljy 2 rkl\n" +
+                        "Lime 1\n" +
+                        "Punainen currytahna 2 rkl\n" +
+                        "Beanit -härkäpapusuikale 250 g\n" +
+                        "Soijakastike 2 rkl");
             }
         });
         return root;
