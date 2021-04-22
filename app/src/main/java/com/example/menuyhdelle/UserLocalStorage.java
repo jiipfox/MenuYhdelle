@@ -5,12 +5,15 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,49 +21,103 @@ import java.util.regex.Pattern;
  * User backend implementation and helper classes. Todo check if needs to be splitted
  */
 public class UserLocalStorage {
+    private static String filename = "user.json";
+    private static int buffer_size = 2048;
 
     private ArrayList<User> userList = new ArrayList<>(); // todo replace with seeking the data from test.json
 
     // Test functions
-    public boolean writeJson(Context c){
-        // Test JSONing
-        String testUserString = loadJSONFromAsset(c.getApplicationContext());
-        System.out.println(testUserString);
+    public boolean writeJson(Context c) {
+        System.out.println("Write json to : ");
+        System.out.println(c.getFilesDir());
+        File path = c.getFilesDir();
+        File file = new File(path, filename);
 
-        ArrayList<User> allUsers =  JsonToUserList(testUserString);
-        System.out.println("User list size = " + allUsers.size());
+        String jsonString = userListToJson(this.userList);
+        System.out.println("Store JSON as: ");
+        System.out.println(jsonString);
 
+        try {
+            FileOutputStream fos = new FileOutputStream(file); //c.getApplicationContext().openFileOutput(filename,
+                                   //                                         c.getApplicationContext().MODE_PRIVATE);
+            fos.write(jsonString.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
     // Test functions
-    public boolean readJson(Context c){
+    public boolean readJson(Context c) {
+        String testUserString = readJsonFile(c);
+        System.out.println("Before"); // todo test
+        System.out.println(testUserString);
+        this.userList = JsonToUserList(testUserString);
+
+        System.out.println("User names:"); // todo test prints
+        if (userList == null){
+            System.out.println("User list is null!"); // todo test prints
+            return false;
+        }
+
+        for (int i = 0; i < userList.size(); i++) {
+            System.out.println("Name (" + i + ") = " + userList.get(i).getUserName());
+        }
+
         return true;
     }
 
-    /** todo:
-     *  - password verification
-     *  - check if user is already created, problems in the login phase otherwise
+    public String readJsonFile(Context c) {
+        String json = null;
+        try {
+            File path = c.getFilesDir();
+            File file = new File(path, filename);
+            System.out.println("File path = " + file.toPath());
+
+            InputStream is = new FileInputStream(file);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    /**
+     * todo:
+     * - password verification
+     * - check if user is already created, problems in the login phase otherwise
      */
-    public boolean createUser(String name, String pass, double co2obj){
-        if (isValidName(name) == false){
+    public boolean createUser(String name, String pass, double co2obj) {
+        if (isValidName(name) == false) {
             System.out.println("Invalid user name.");
             return false;
         }
 
-        if (isValidPassword(pass) == false){
+        if (isValidPassword(pass) == false) {
             System.out.println("Invalid user pass.");
             return false;
         }
 
-        if (isValidObjective(co2obj) == false){
+        if (isValidObjective(co2obj) == false) {
             System.out.println("Invalid co2 obj");
             return false;
         }
 
-        User newUser = new User(name, pass, co2obj);
-        userList.add(newUser);
-        System.out.println("User list size in LoginActivity = " + userList.size());
+        try{
+            User newUser = new User(name, pass, co2obj);
+            userList.add(newUser);
+            System.out.println("User list size in LoginActivity = " + userList.size());
+        } catch (NullPointerException ei){
+            ei.printStackTrace();
+            return false;
+        }
 
         return true;
     }
@@ -97,25 +154,24 @@ public class UserLocalStorage {
         return null;
     }
 
-    private boolean verifyPassword(String pass, String loginPass){
-        if (pass.equals(loginPass)){
+    private boolean verifyPassword(String pass, String loginPass) {
+        if (pass.equals(loginPass)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    private boolean isValidObjective(Double obj){
+    private boolean isValidObjective(Double obj) {
         if (obj >= 0.0) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
 
-    private boolean isValidName(String name){
-        if (name.length() > 0){
+    private boolean isValidName(String name) {
+        if (name.length() > 0) {
             return true;
         } else {
             return false;
@@ -124,17 +180,18 @@ public class UserLocalStorage {
 
     /**
      * Atleast 1 number, 1 alpha, 1 special, len > 4
+     *
      * @param pass
      * @return true if valid
      */
-    private boolean isValidPassword(String pass){
+    private boolean isValidPassword(String pass) {
         Pattern pattern;
         Matcher matcher;
         final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[@_.]).*$";
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(pass);
 
-        if (pass.length() > 4){ //&& matcher.matches()) { // todo shit doesnt work
+        if (pass.length() > 4) { //&& matcher.matches()) { // todo shit doesnt work
             return true;
         }
         return false;
@@ -142,17 +199,19 @@ public class UserLocalStorage {
 
     /**
      * Serialize string Json to ArrayList of Users
+     *
      * @param jsonTxt that contains instances of User in form of ArrayList
      * @return null if unsuccesfull, ArrayList of users if ok
      */
-    public ArrayList<User> JsonToUserList(String jsonTxt){
+    public ArrayList<User> JsonToUserList(String jsonTxt) {
         // todo do some kind of validation?
         ArrayList<User> userList = null;
-        Type userListType = new TypeToken<ArrayList<User>>(){}.getType(); // Java cannot handle the array list for fromJson class type so need to change
+        Type userListType = new TypeToken<ArrayList<User>>() {
+        }.getType(); // Java cannot handle the array list for fromJson class type so need to change
         try {
             Gson gson = new Gson();
             userList = gson.fromJson(jsonTxt, userListType);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("error when converting json to user object");
             System.out.println(e.toString());
         }
@@ -161,15 +220,15 @@ public class UserLocalStorage {
 
     /**
      * Deserialize ArrayList of Users to json string.
+     *
      * @param a ArrayList of Users
      * @return null if unsucessfull, json string
      */
-    public String userListToJson(ArrayList<User> a){
+    public String userListToJson(ArrayList<User> a) {
         String json = null;
         try {
             Gson gson = new Gson();
-            String jsonTxt = gson.toJson(a);
-            System.out.println(jsonTxt);
+            json = gson.toJson(a);
         } catch (Exception e) {
             System.out.println("error when converting user object to json ");
             System.out.println(e.toString());
@@ -178,46 +237,9 @@ public class UserLocalStorage {
     }
 
 
-    /**
-     * todo not needed?
-     * @param jsonTxt with parameters in format of user
-     * @return null if unsuccesfull, User if ok
-     */
-    public User JsonToUser(String jsonTxt){
-        // todo do some kind of validation?
-        User user = null;
-        try {
-            Gson gson = new Gson();
-            user = gson.fromJson(jsonTxt, User.class);
-            System.out.println("User: " + user.getUserName());
-            System.out.println("Obj: " + user.getCo2AnnualOjbective());
-        } catch (Exception e){
-            System.out.println("error when converting json to user object");
-            System.out.println(e.toString());
-        }
-        return user;
-    }
 
     /**
-     * todo not needed?
-     * @param user instance of User
-     * @return null if unsuccesfull, json array list in form of a string
-     */
-    public String userToJson(User user){
-        String json = null;
-        try {
-            Gson gson = new Gson();
-            String jsonTxt = gson.toJson(user);
-            System.out.println(jsonTxt);
-        } catch (Exception e) {
-            System.out.println("error when converting user object to json ");
-            System.out.println(e.toString());
-        }
-        return json;
-    }
-
-    /**
-     *
+     * Todo redundant, not needed as asset folder cannot be used
      * @param context
      * @return
      */
@@ -237,4 +259,45 @@ public class UserLocalStorage {
         }
         return json;
     }
+
+    /**
+     * todo not needed?
+     *
+     * @param user instance of User
+     * @return null if unsuccesfull, json array list in form of a string
+     */
+    public String userToJson(User user) {
+        String json = null;
+        try {
+            Gson gson = new Gson();
+            String jsonTxt = gson.toJson(user);
+            System.out.println(jsonTxt);
+        } catch (Exception e) {
+            System.out.println("error when converting user object to json ");
+            System.out.println(e.toString());
+        }
+        return json;
+    }
+
+    /**
+     * todo not needed?
+     *
+     * @param jsonTxt with parameters in format of user
+     * @return null if unsuccesfull, User if ok
+     */
+    public User JsonToUser(String jsonTxt) {
+        // todo do some kind of validation?
+        User user = null;
+        try {
+            Gson gson = new Gson();
+            user = gson.fromJson(jsonTxt, User.class);
+            System.out.println("User: " + user.getUserName());
+            System.out.println("Obj: " + user.getCo2AnnualOjbective());
+        } catch (Exception e) {
+            System.out.println("error when converting json to user object");
+            System.out.println(e.toString());
+        }
+        return user;
+    }
+
 }

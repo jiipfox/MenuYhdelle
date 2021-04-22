@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         MainClass main = MainClass.getMain();
         // main.createNewUser("Hillevi", "1234", 100.0);
-        main.writeDb(getApplicationContext());
+        //main.saveDb(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);

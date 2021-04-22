@@ -15,6 +15,7 @@ import com.example.menuyhdelle.LeftistMenuActivity;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
+// Todo: Is this the first activity that is loaded?
 public class LoginActivity extends AppCompatActivity {
 
     Button loginBtn;
@@ -26,14 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Context c = getApplicationContext();
         MainClass main = MainClass.getMain();
-
+        main.createNewUser("Teppo3", "Hittolainen", 100.0);
+        main.saveDb(getApplicationContext());
         main.loadDb(getApplicationContext());
 
-        main.createNewUser("Hillevi", "Hittolainen", 100.0);
-
-        if (main.loginUser("Hillevi", "Hittolainen")) {
+        if (main.loginUser("Teppo3", "Hittolainen")) {
             String name = main.getUserName();
             System.out.println("Login succeeded, welcome " + name);
         }
