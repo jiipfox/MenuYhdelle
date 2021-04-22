@@ -8,15 +8,27 @@
     tools:context=".ui.slideshow.SlideshowViewModel"
     android:layout_gravity="center_horizontal">
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="90dp">
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/simpleSearchView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </TextView>
-    </ScrollView>
+
+        </androidx.appcompat.widget.SearchView>
+
+        <ListView
+            android:layout_marginTop="65dp"
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -33,7 +45,7 @@
             android:layout_margin="20dp"
             android:text="Tyhjennä tiedot"
             android:textAllCaps="false"
-            android:backgroundTint="#c21717"></Button>
+            android:backgroundTint="#c21717" />
 
         <Button
             android:id="@+id/exportBtn"
@@ -42,7 +54,8 @@
             android:layout_margin="20dp"
             android:text="Vie tiedot"
             android:textAllCaps="false"
-            android:backgroundTint="#17C25B"></Button>
+            android:backgroundTint="#17C25B" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
