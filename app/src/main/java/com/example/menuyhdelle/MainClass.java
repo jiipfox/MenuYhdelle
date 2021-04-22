@@ -1,13 +1,14 @@
 package com.example.menuyhdelle;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class MainClass {
     static private MainClass main = null;
     private ArrayList<Menu> menuList = new ArrayList<>();
-    private ArrayList<User> userList = new ArrayList<>();
-    // private ArrayList<Class> shoppingLists = new ArrayList<>();
-    private User currentUser; // we might not need to pass this via set / get functions if use always this in the methods
+        // private ArrayList<Class> shoppingLists = new ArrayList<>();
+    private User currentUser;
 
     // *** Constructors ***
     private MainClass() {
@@ -21,63 +22,62 @@ public class MainClass {
         return main;
     }
 
+    UserLocalStorage userBackEnd = new UserLocalStorage(); // todo work or no work?
+
     // *** Methods ***
     public void createMenu() {
         menuList.add(new Menu("Gourmet menu"));
     }
 
-    /** todo:
-     *  - password verification
-     *  - check if user is already created, problems in the login phase otherwise
+    /**
+     * Initialize database loading things
+     * todo change so that only inits are done and no database is read
+     * @param c
+     * @return
      */
-    public void createUser(String name, String pass, double co2obj) {
-        userList.add(new User(name, pass, co2obj));
+    public boolean loadDb(Context c){
+        System.out.println("load db");
+        userBackEnd.readJson(c);
+        return true;
     }
 
     /**
-     * If user exists and pass matches, set as currentUser and return it also
-     * @param loginName
-     * @param loginPass
-     * @return true if found, false if not
+     * Initialize database writing
+     * todo testing only atm
+     * @param c
+     * @return
      */
-    public boolean loginUser(String loginName, String loginPass) {
-        boolean passOk = false;
-        System.out.println("Try to login: " + loginName + ", login pass = " + loginPass);
-
-        if (userList == null){
-            System.out.println("Empty user list, add more users.");
-            return false;
-        }
-
-        if (userList.size() <= 0){
-            System.out.println("Empty user list, add more users.");
-            return false;
-        }
-
-        for (int i = 0; i < userList.size(); i++){
-            String userName = userList.get(i).getUserName();
-            if (userName == loginName){
-                System.out.println("Login user name found from index " + i);
-                passOk = verifyPassword(userList.get(i).getPassword(), loginPass);
-                if (passOk){
-                    currentUser = userList.get(i);
-                    return true;
-                }
-                else{
-                    System.out.println("Wrong password!");
-                }
-                break;
-            }
-        }
-
-        return false;
+    public boolean writeDb(Context c){
+        System.out.println("write db");
+        userBackEnd.writeJson(c);
+        return true;
     }
 
-    private boolean verifyPassword(String pass, String loginPass){
-        if (pass.equals(loginPass)){
+    /**
+     * If user exists and pass matches, return true
+     * @param loginName
+     * @param loginPass
+     * @return true if found & password matches, false if not
+     */
+    public boolean loginUser(String loginName, String loginPass) {
+        User loggedInUser = userBackEnd.loginUser(loginName, loginPass);
+
+        if (loggedInUser == null){
+            return false;
+        } else {
+            currentUser = loggedInUser;
             return true;
         }
-        else{
+    }
+
+
+    public boolean createNewUser(String name, String pass, double co2obj)
+    {
+        if (userBackEnd.createUser(name, pass, co2obj)){
+            System.out.println("Succesfully created user");
+            return true;
+        } else {
+            System.out.println("Cannot create user");
             return false;
         }
     }

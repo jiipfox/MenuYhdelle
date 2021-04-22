@@ -24,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 public class LeftistMenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    UserLocalStorage us = new UserLocalStorage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +31,6 @@ public class LeftistMenuActivity extends AppCompatActivity {
 
         MainClass main = MainClass.getMain();
         main.createMenu();
-        main.createUser("Hillevi Hiili", "1234", 100.0);
-
-        if (main.loginUser("Hillevi Hiili", "12345")) {
-            String name = main.getUserName();
-            System.out.println("Login succeeded, welcome " + name);
-        }
-        else {
-            System.out.println("Login failed");
-        }
-
-        // Test JSONing
-        String testUserString = us.loadJSONFromAsset(getApplicationContext());
-        System.out.println(testUserString);
-
-        ArrayList<User> allUsers =  us.JsonToUserList(testUserString);
-        System.out.println("User list size = " + allUsers.size());
 
         // Test cryptos
         try {

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -20,6 +21,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainClass main = MainClass.getMain();
+        // main.createNewUser("Hillevi", "1234", 100.0);
+        main.writeDb(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 

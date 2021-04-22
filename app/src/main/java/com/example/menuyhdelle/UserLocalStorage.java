@@ -11,10 +11,134 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-// Mixed sorts of helper functions to store the data
-// Note, separate user data and login credentials?
+/**
+ * User backend implementation and helper classes. Todo check if needs to be splitted
+ */
 public class UserLocalStorage {
+
+    private ArrayList<User> userList = new ArrayList<>(); // todo replace with seeking the data from test.json
+
+    // Test functions
+    public boolean writeJson(Context c){
+        // Test JSONing
+        String testUserString = loadJSONFromAsset(c.getApplicationContext());
+        System.out.println(testUserString);
+
+        ArrayList<User> allUsers =  JsonToUserList(testUserString);
+        System.out.println("User list size = " + allUsers.size());
+
+        return true;
+    }
+
+    // Test functions
+    public boolean readJson(Context c){
+        return true;
+    }
+
+    /** todo:
+     *  - password verification
+     *  - check if user is already created, problems in the login phase otherwise
+     */
+    public boolean createUser(String name, String pass, double co2obj){
+        if (isValidName(name) == false){
+            System.out.println("Invalid user name.");
+            return false;
+        }
+
+        if (isValidPassword(pass) == false){
+            System.out.println("Invalid user pass.");
+            return false;
+        }
+
+        if (isValidObjective(co2obj) == false){
+            System.out.println("Invalid co2 obj");
+            return false;
+        }
+
+        User newUser = new User(name, pass, co2obj);
+        userList.add(newUser);
+        System.out.println("User list size in LoginActivity = " + userList.size());
+
+        return true;
+    }
+
+    public User loginUser(String loginName, String loginPass) {
+        User user;
+        boolean passOk = false;
+        System.out.println("Try to login: " + loginName + ", login pass = " + loginPass);
+
+        if (userList == null) {
+            System.out.println("Empty user list, add more users.");
+            return null;
+        }
+
+        if (userList.size() <= 0) {
+            System.out.println("Empty user list, add more users.");
+            return null;
+        }
+
+        for (int i = 0; i < userList.size(); i++) {
+            String userName = userList.get(i).getUserName();
+            if (userName == loginName) {
+                System.out.println("Login user name found from index " + i);
+                passOk = verifyPassword(userList.get(i).getPassword(), loginPass);
+                if (passOk) {
+                    user = userList.get(i);
+                    return user;
+                } else {
+                    System.out.println("Wrong password!");
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
+    private boolean verifyPassword(String pass, String loginPass){
+        if (pass.equals(loginPass)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean isValidObjective(Double obj){
+        if (obj >= 0.0) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    private boolean isValidName(String name){
+        if (name.length() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Atleast 1 number, 1 alpha, 1 special, len > 4
+     * @param pass
+     * @return true if valid
+     */
+    private boolean isValidPassword(String pass){
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[@_.]).*$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(pass);
+
+        if (pass.length() > 4){ //&& matcher.matches()) { // todo shit doesnt work
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Serialize string Json to ArrayList of Users
