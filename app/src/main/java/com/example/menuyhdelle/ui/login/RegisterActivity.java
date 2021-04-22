@@ -48,11 +48,21 @@ public class RegisterActivity extends AppCompatActivity {
         createUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String name = editTextUser.getText().toString();
+                String pass = editTextPassword.getText().toString(); // todo where to hash?
+                double co2Obj = Double.parseDouble(editTextCO2.getText().toString());
+
+                if (main.createNewUser(name, pass, co2Obj)){
+                    System.out.println("New user created.");
+                    main.saveDb(getApplicationContext());
+                } else {
+                    System.out.println("New user not created!");
+                }
+
                 // Save user to database and display toast "User successfully created" or some error
                 // if any of the fields are left unfinished.
             }
         });
-
     }
 
     // This method will change view to LoginActivity if user clicks alrdyHaveUser button.
