@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.menuyhdelle.R;
-import com.example.menuyhdelle.ui.slideshow.SlideshowViewModel;
 
 public class FoodbankFragment extends Fragment {
 

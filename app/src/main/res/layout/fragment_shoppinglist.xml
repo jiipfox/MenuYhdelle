@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.slideshow.SlideshowViewModel"
+    tools:context=".ui.shoppinglist.ShoppingListViewModel"
     android:layout_gravity="center_horizontal">
 
     <RelativeLayout
@@ -15,18 +15,37 @@
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/simpleSearchView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </androidx.appcompat.widget.SearchView>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/writeItemName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:hint="Kirjoita raaka-aineen nimi"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/ic_searchbackgrd">
+            </EditText>
+            <Button
+                android:id="@+id/addItemBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lisää"
+                android:textAllCaps="false"
+                android:background="#17C25B"
+                android:layout_margin="5dp">
+                </Button>
+        </LinearLayout>
 
         <ListView
             android:layout_marginTop="65dp"
-            android:id="@+id/listview"
+            android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoice"></ListView>
 
     </RelativeLayout>
 
