@@ -3,6 +3,9 @@ package com.example.menuyhdelle;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ *  todo Per week menu?
+ */
 public class Menu {
     private ArrayList<Dish> dishes = new ArrayList<>();
     // private Class user;
@@ -20,9 +23,18 @@ public class Menu {
     }
 
     // *** Methods ***
-    public void getMenuCO2() {
+
+    /**
+     * Todo implementation
+     * @return co2 foot print in double
+     */
+    public Double getMenuCO2() {
+        Double co2FootPrint = 100.0;
+
+        return co2FootPrint;
 
     }
+
     public void addDish() {
         this.dishes.add(new Dish("Pyttipannu"));
     }

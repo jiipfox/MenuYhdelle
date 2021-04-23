@@ -11,8 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,15 +19,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class LeftistMenuActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    MainClass main = MainClass.getMain();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MainClass main = MainClass.getMain();
         main.createMenu();
 
         // Test cryptos
@@ -100,7 +98,11 @@ public class LeftistMenuActivity extends AppCompatActivity {
 
     public void logOut(){
         // This "logs out" and returns to LoginActivity class.
-        Intent intent = new Intent(LeftistMenuActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public Double getCurrentUserCo2Target(){
+        return main.getCurrentUserTergetCo2Value();
     }
 }

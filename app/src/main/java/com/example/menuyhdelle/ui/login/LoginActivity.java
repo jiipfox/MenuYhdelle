@@ -2,7 +2,6 @@ package com.example.menuyhdelle.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.menuyhdelle.LeftistMenuActivity;
+import com.example.menuyhdelle.MainActivity;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
@@ -91,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginView(View v) {
-        Intent intent = new Intent(LoginActivity.this, LeftistMenuActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivityForResult(intent, 1);
     }
 }

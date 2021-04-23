@@ -22,11 +22,15 @@ import java.util.regex.Pattern;
  */
 public class UserLocalStorage {
     private static String filename = "user.json";
-    private static int buffer_size = 2048;
 
     private ArrayList<User> userList = new ArrayList<>(); // todo replace with seeking the data from test.json
 
-    // Test functions
+    /**
+     * Get path from context, create json from the users list and store it to
+     *
+     * @param c context to get the user application file location
+     * @return
+     */
     public boolean writeJson(Context c) {
         System.out.println("Write json to : " + c.getFilesDir());
         File path = c.getFilesDir();
@@ -48,7 +52,11 @@ public class UserLocalStorage {
         return true;
     }
 
-    // Test functions
+    /**
+     *
+     * @param c context to get the user application file location
+     * @return
+     */
     public boolean readJson(Context c) {
         String testUserString = readJsonFile(c);
         System.out.println("Before"); // todo test
@@ -221,7 +229,7 @@ public class UserLocalStorage {
 
     /**
      * Deserialize ArrayList of Users to json string.
-     *
+     * todo could this be generic
      * @param a ArrayList of Users
      * @return null if unsucessfull, json string
      */

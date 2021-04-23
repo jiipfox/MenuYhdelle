@@ -102,4 +102,11 @@ public class MainClass {
     public void setMenuList(ArrayList<Menu> menuList) {
         this.menuList = menuList;
     }
+
+    public Double getCurrentUserTergetCo2Value(){
+        if (currentUser == null){
+            System.out.println("No user defined!");
+        }
+        return currentUser.getCo2AnnualOjbective();
+    }
 }
