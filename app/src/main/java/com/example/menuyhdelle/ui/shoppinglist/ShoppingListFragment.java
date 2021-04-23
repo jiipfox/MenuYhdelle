@@ -80,6 +80,11 @@ public class ShoppingListFragment extends Fragment {
             public void onClick(View v) {
                 String[] list = returnList(v);
 
+                if (list.length==0){
+                    Toast toast = Toast.makeText(getContext(),"Ei poistettavaa",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
                 for(String i : list){
                     StringArrayList.remove(i);
                     adapter.notifyDataSetChanged();
@@ -89,6 +94,8 @@ public class ShoppingListFragment extends Fragment {
         });
 
         // Export data into CSV-file
+
+        /*
 
         expButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,13 +123,15 @@ public class ShoppingListFragment extends Fragment {
             }
         });
 
-    return root;
+         */
+
+        return root;
 
     }
 
     private void findViewsById(View v) {
         listView = v.findViewById(R.id.listView);
-        expButton = v.findViewById(R.id.exportBtn);
+        //expButton = v.findViewById(R.id.exportBtn);
         delButton = v.findViewById(R.id.emptyBtn);
         addButton = v.findViewById(R.id.addItemBtn);
     }
