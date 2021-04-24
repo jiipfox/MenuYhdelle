@@ -1,6 +1,8 @@
 package com.example.menuyhdelle;
 
 
+import java.util.ArrayList;
+
 /*
 *
 * */
@@ -9,13 +11,14 @@ public class User {
     private String password = "";
     private double co2AnnualOjbective = 0.0;
     private double co2Cumulative = 0.0;
+    private ArrayList<Menu> userMenus;
     private static int counter;
 
     public User(String name, String pass, Double objective){
-        userName = name;
-        password = pass;
-        co2AnnualOjbective = objective;
-
+        this.userName = name;
+        this.password = pass;
+        this.co2AnnualOjbective = objective;
+        this.userMenus = new ArrayList<>();
         System.out.println("New user created: " + this.userName);
     }
 
@@ -45,6 +48,14 @@ public class User {
 
     public void setCo2AnnualOjbective(Double objective){
         co2AnnualOjbective = objective;
+    }
+
+    public void setMenus(Menu m){
+
+        this.userMenus.add(m);
+    }
+    public ArrayList<Menu> getMenus(){
+        return this.userMenus;
     }
 
     /**

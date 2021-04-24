@@ -16,9 +16,12 @@ public class Menu {
     public Menu() {
 
     }
-    public Menu(String n) {
+
+    public Menu(String n, ArrayList<Dish> dish, Date date) {
+        System.out.println("Add menu: " + n);
         this.name = n;
-        System.out.println("Added menu: " + this.name);
+        this.dishes = dish;
+        this.date = date;
         this.addDish(null);
     }
 
@@ -36,7 +39,6 @@ public class Menu {
     }
 
     public void addDish(Dish dish) {
-        this.dishes.add(new Dish("Pyttipannu")); // todo remove
 
         if (dish == null){ // fail safer?
             return;
@@ -62,5 +64,9 @@ public class Menu {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

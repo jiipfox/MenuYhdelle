@@ -7,23 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.menuyhdelle.Dish;
-import com.example.menuyhdelle.DishIngredient;
 import com.example.menuyhdelle.Ingredient;
 import com.example.menuyhdelle.IngredientAdapter;
 import com.example.menuyhdelle.MainClass;
+import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class SlideshowFragment extends Fragment {
 
@@ -85,7 +83,18 @@ public class SlideshowFragment extends Fragment {
             }
         });
 
-        // Export button to export files in CSV
+        /** Menu tests: */
+        Date created = new Date();
+        created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
+        Menu erikoisMenu = new Menu("Erikois", dishes, created);
+        main.assignMenuToCurrentUser(erikoisMenu);
+
+        ArrayList<Menu> testMenuLists = main.retrieveMenuOfCurrentUser();
+
+        System.out.println("HERE COMES MENU PRINT: ");
+        for (int i = 0; i< testMenuLists.size();i++){
+            System.out.println(testMenuLists.get(i).getName());
+        }
 
         Button exportBtn = root.findViewById(R.id.exportBtn);
         exportBtn.setOnClickListener(new View.OnClickListener() {

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainClass {
     static private MainClass main = null;
@@ -31,7 +32,7 @@ public class MainClass {
 
     // *** Methods ***
     public void createMenu() {
-        menuList.add(new Menu("Gourmet menu"));
+        menuList.add(new Menu("Gourmet menu", null, new Date())); // nonsense just to test
     }
 
     /**
@@ -117,6 +118,25 @@ public class MainClass {
     public boolean storeDishes(File path){
         stuffBackEnd.storeDishes(path);
         return true;
+    }
+
+    /**
+     * Assign Menu m to logged in User
+     * @return true if successful
+     */
+    public boolean assignMenuToCurrentUser(Menu m){
+        if (m != null && currentUser != null) {
+            System.out.println("Add, " + currentUser.getUserName() + ", " + m.getName());
+            currentUser.setMenus(m);
+            return true;
+        } else {
+            System.out.println("Menu or user is null!");
+            return false;
+        }
+    }
+
+    public ArrayList<Menu> retrieveMenuOfCurrentUser(){
+        return currentUser.getMenus();
     }
 
     public ArrayList<Dish> loadDishes(File path){
