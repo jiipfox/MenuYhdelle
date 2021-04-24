@@ -62,7 +62,7 @@ public class ListViewAdapter extends BaseAdapter {
         Menu item = productList.get(position);
         holder.mDate.setText(DateFormat.format("dd MMMM yyyy", item.getDate()).toString());
         holder.mItem.setText(item.getName());
-        holder.mCo2.setText(item.getMenuCO2().toString());
+        holder.mCo2.setText(item.getCO2().toString());
         return convertView;
     }
 }
