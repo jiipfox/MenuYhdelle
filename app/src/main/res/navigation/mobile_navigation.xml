@@ -13,15 +13,15 @@
 
     <fragment
         android:id="@+id/nav_settings_1"
-        android:name="com.example.menuyhdelle.ui.gallery.GalleryFragment"
+        android:name="com.example.menuyhdelle.ui.history.HistoryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/nav_settings_2"
-        android:name="com.example.menuyhdelle.ui.slideshow.SlideshowFragment"
+        android:name="com.example.menuyhdelle.ui.shoppinglist.ShoppingListFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_shoppinglist" />
     <fragment
         android:id="@+id/nav_settings_3"
         android:name="com.example.menuyhdelle.ui.foodbank.FoodbankFragment"

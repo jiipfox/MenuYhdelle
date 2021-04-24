@@ -1,17 +1,19 @@
-package com.example.menuyhdelle.ui.gallery;
+package com.example.menuyhdelle.ui.shoppinglist;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class ShoppingListViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public ShoppingListViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Historia");
+        mText.setValue("Ostoslista");
     }
+
+
 
     public LiveData<String> getText() {
         return mText;

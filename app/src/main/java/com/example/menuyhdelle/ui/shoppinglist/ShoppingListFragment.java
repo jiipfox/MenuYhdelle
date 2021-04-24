@@ -23,17 +23,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-public class SlideshowFragment extends Fragment {
+public class ShoppingListFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private ShoppingListViewModel shoppingListViewModel;
     ArrayAdapter<Ingredient> adapter;
     String searchQry;
     MainClass main = MainClass.getMain();
     private File path;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        shoppingListViewModel = new ViewModelProvider(this).get(ShoppingListViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_shoppinglist, container, false);
 
         final ListView listView = root.findViewById(R.id.listview);
 
@@ -49,7 +49,7 @@ public class SlideshowFragment extends Fragment {
         // 3) store when all done
         main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
 
-        // 4) load and use the arrray list
+        // 4) load and use the array list
         ArrayList<Ingredient> ingredientArrayList = main.loadIngredients(this.path);
 
         // Create the adapter to convert the array to views
