@@ -4,10 +4,11 @@ public class DishIngredient {
     private Ingredient ingredient;
     private float quantity;
 
+
     // *** Constructors ***
     public DishIngredient() {
         System.out.println("Added dish DishIngredient");
-        this.ingredient = new Ingredient("Pottu");
+        this.ingredient = new Ingredient("Pottu", 0.1, "kpl", 0.0 );
         this.quantity = (float) 1.0;
     }
 

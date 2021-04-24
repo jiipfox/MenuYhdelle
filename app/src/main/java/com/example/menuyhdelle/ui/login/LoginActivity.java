@@ -14,6 +14,8 @@ import com.example.menuyhdelle.MainActivity;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
+import java.io.File;
+
 // Todo: Is this the first activity that is loaded?
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,10 +28,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        File path = getApplicationContext().getFilesDir();
+        System.out.println("login activity, files TO THE " + path.toString());
         MainClass main = MainClass.getMain();
         main.createNewUser("Teppo", "123456", 100.0);
-        main.saveDb(getApplicationContext());
-        main.loadDb(getApplicationContext());
+        main.saveDb(path);
+        main.loadDb(path);
 
         // Find elements by their ID's.
         loginBtn = findViewById(R.id.loginButton);

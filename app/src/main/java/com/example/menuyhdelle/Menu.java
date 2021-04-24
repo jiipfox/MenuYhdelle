@@ -19,7 +19,7 @@ public class Menu {
     public Menu(String n) {
         this.name = n;
         System.out.println("Added menu: " + this.name);
-        this.addDish(); 
+        this.addDish(null);
     }
 
     // *** Methods ***
@@ -35,9 +35,15 @@ public class Menu {
 
     }
 
-    public void addDish() {
-        this.dishes.add(new Dish("Pyttipannu"));
+    public void addDish(Dish dish) {
+        this.dishes.add(new Dish("Pyttipannu")); // todo remove
+
+        if (dish == null){ // fail safer?
+            return;
+        }
+        this.dishes.add(dish);
     }
+
     public void removeDish() {
 
     }

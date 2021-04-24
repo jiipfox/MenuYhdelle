@@ -2,6 +2,7 @@ package com.example.menuyhdelle;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainClass {
@@ -9,20 +10,24 @@ public class MainClass {
     private ArrayList<Menu> menuList = new ArrayList<>();
         // private ArrayList<Class> shoppingLists = new ArrayList<>();
     private User currentUser;
+    private File path;
+    private Context appContext;
+    UserLocalStorage userBackEnd = new UserLocalStorage();
+    StuffLocalStorage stuffBackEnd = new StuffLocalStorage();
 
     // *** Constructors ***
     private MainClass() {
         System.out.println("Main class created");
     }
 
+    // Use context to access file saving location
     static public MainClass getMain() {
         if (main == null) {
-            main = new MainClass();
+            main = new MainClass(); // Context on application level never changes so this should be risk free
         }
         return main;
     }
 
-    UserLocalStorage userBackEnd = new UserLocalStorage(); // todo work or no work?
 
     // *** Methods ***
     public void createMenu() {
@@ -32,23 +37,22 @@ public class MainClass {
     /**
      * Initialize database loading things
      * todo change so that only inits are done and no database is read
-     * @param c
      * @return
      */
-    public boolean loadDb(Context c){
+    public boolean loadDb(File path){
         System.out.println("load db");
-        userBackEnd.readJson(c);
+        userBackEnd.readJson(path);
         return true;
     }
 
     /**
      * Initialize database writing
      * todo testing only atm
-     * @param c
      * @return
      */
-    public boolean saveDb(Context c){
-        userBackEnd.writeJson(c);
+    public boolean saveDb(File path){
+        System.out.println("save db");
+        userBackEnd.writeJson(path);
         return true;
     }
 
@@ -69,7 +73,7 @@ public class MainClass {
         }
     }
 
-
+    // TODO store the user to db in here or in createUser function
     public boolean createNewUser(String name, String pass, double co2obj)
     {
         if (userBackEnd.createUser(name, pass, co2obj)){
@@ -80,6 +84,45 @@ public class MainClass {
             return false;
         }
     }
+
+    /**
+     * Wrapper/abstraction for backend features
+     * @return created ingredient instance
+     */
+    public Ingredient createIngredient(String name, double co2, String uom, double price){
+        Ingredient ingre = new Ingredient(name, co2, uom, price);
+        stuffBackEnd.addStuff(ingre);
+        return ingre;
+    }
+
+    public boolean storeIngredients(File path){
+        stuffBackEnd.storeIngredients(path);
+        return true;
+    }
+
+    public ArrayList<Ingredient> loadIngredients(File path){
+        return stuffBackEnd.loadIngredients(path);
+    }
+
+    /**
+     * Wrapper/abstraction for backend features
+     * @return created ingredient instance
+     */
+    public Dish createDish(String n, ArrayList<Ingredient> a, String diet, String type, String recipe){
+        Dish d = new Dish(n,a,diet,type,recipe);
+        stuffBackEnd.addStuff(d);
+        return d;
+    }
+
+    public boolean storeDishes(File path){
+        stuffBackEnd.storeDishes(path);
+        return true;
+    }
+
+    public ArrayList<Dish> loadDishes(File path){
+        return stuffBackEnd.loadDishes(path);
+    }
+
 
     public String getUserName(){
         return currentUser.getUserName();

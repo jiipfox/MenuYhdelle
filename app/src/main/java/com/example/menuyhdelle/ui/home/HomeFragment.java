@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.menuyhdelle.MainActivity;
 import com.example.menuyhdelle.R;
 
+/**
+ * Create weekly menu by selecting dishes for the appropriate sections and display how it scales to the co2 target.
+ */
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
