@@ -68,8 +68,6 @@ public class SlideshowFragment extends Fragment {
             }
         });
 
-        main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
-
         // Export button to export files in CSV
 
         Button exportBtn = root.findViewById(R.id.exportBtn);
