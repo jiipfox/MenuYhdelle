@@ -85,7 +85,10 @@ public class MainClass {
         }
     }
 
-    // Todo: After testing, remove return type to void. Not supposed to be used such a way
+    /**
+     * Wrapper/abstraction for backend features
+     * @return created ingredient instance
+     */
     public Ingredient createIngredient(String name, double co2, String uom, double price){
         Ingredient ingre = new Ingredient(name, co2, uom, price);
         stuffBackEnd.addStuff(ingre);
@@ -100,6 +103,26 @@ public class MainClass {
     public ArrayList<Ingredient> loadIngredients(File path){
         return stuffBackEnd.loadIngredients(path);
     }
+
+    /**
+     * Wrapper/abstraction for backend features
+     * @return created ingredient instance
+     */
+    public Dish createDish(String n, ArrayList<Ingredient> a, String diet, String type, String recipe){
+        Dish d = new Dish(n,a,diet,type,recipe);
+        stuffBackEnd.addStuff(d);
+        return d;
+    }
+
+    public boolean storeDishes(File path){
+        stuffBackEnd.storeDishes(path);
+        return true;
+    }
+
+    public ArrayList<Dish> loadDishes(File path){
+        return stuffBackEnd.loadDishes(path);
+    }
+
 
     public String getUserName(){
         return currentUser.getUserName();

@@ -80,17 +80,54 @@ public class StuffLocalStorage {
 
 
     public boolean storeDishes(File givenPath){
+        System.out.println("Store dishes.");
+
         File file = new File(givenPath, dishFilename);
         String jsonString = stuffToJson(this.dishes);
         System.out.println("Write json to: " + file.toPath());
         System.out.println("Data: " + jsonString);
         if (io.write(file, jsonString, false)){
+            System.out.println("ok");
             return true;
         } else {
+            System.out.println("NOT NOT NOT ok");
             return false;
         }
     }
 
+    public ArrayList<Dish> loadDishes(File definedPath) {
+        File file = new File(definedPath, dishFilename);
+        System.out.println("Dishes file path = " + file.toPath());
+
+        String userString = io.read(file);
+        this.dishes = jsonToDishList(userString);
+
+        if (this.dishes == null){
+            System.out.println("Dish list is null!"); // todo test prints
+            return null;
+        }
+
+        System.out.println("Dish names:"); // todo test prints
+        for (int i = 0; i < this.dishes.size(); i++) {
+            System.out.println("Name (" + i + ") = " + this.dishes.get(i).getName());
+        }
+
+        return this.dishes;
+    }
+
+    public ArrayList<Dish> jsonToDishList(String jsonTxt){
+        ArrayList<Dish> dList = null;
+        // Java cannot handle the array list for fromJson class type so need to change
+        Type dListType = new TypeToken<ArrayList<Dish>>() {}.getType();
+        try {
+            Gson gson = new Gson();
+            dList = gson.fromJson(jsonTxt, dListType);
+        } catch (Exception e) {
+            System.out.println("error when converting json to dish objects");
+            System.out.println(e.toString());
+        }
+        return dList;
+    }
 
     public String stuffToJson(ArrayList a) {
         String json = null;

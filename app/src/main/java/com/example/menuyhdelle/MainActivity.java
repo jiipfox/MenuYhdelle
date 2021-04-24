@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        File path = getApplicationContext().getFilesDir();
 
         main.createMenu();
 

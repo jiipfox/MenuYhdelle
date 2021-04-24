@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.menuyhdelle.Dish;
 import com.example.menuyhdelle.DishIngredient;
 import com.example.menuyhdelle.Ingredient;
 import com.example.menuyhdelle.IngredientAdapter;
@@ -57,6 +58,22 @@ public class SlideshowFragment extends Fragment {
         IngredientAdapter adapter = new IngredientAdapter(this.getContext(), ingredientArrayList);
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
+
+
+        /* ****TEST DISHES ***** */
+        // load ingredient´s
+        ArrayList<Ingredient> ingredientArrayList2 = main.loadIngredients(path);
+        // create dish
+        main.createDish("Kaktus-sieni-kikkare", ingredientArrayList2,"Kasvis", "Ruoka??", "keitä ja valmista");
+
+        // test with some variations
+        main.createIngredient("Vesi", 0.3, "dl", 9.9);
+        main.storeIngredients(path);
+
+        ingredientArrayList = main.loadIngredients(path);
+        main.createDish("Parempi-keitto", ingredientArrayList,"Kasvis", "Juoma??", "kaada ja nauti");
+        main.storeDishes(path);
+        ArrayList<Dish> dishes = main.loadDishes(path);
 
         // Clear button for clearing shopping list
 
