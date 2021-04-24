@@ -25,6 +25,13 @@ public class Dish {
         this.recipe = recipe;
     }
 
+    // To display correct name in spinner
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     // *** Methods ***
     public void getCO2() {
 

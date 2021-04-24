@@ -1,4 +1,4 @@
-package com.example.menuyhdelle.ui.slideshow;
+package com.example.menuyhdelle.ui.shoppinglist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import com.example.menuyhdelle.IngredientAdapter;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
+import com.example.menuyhdelle.ui.shoppinglist.ShoppingListViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
