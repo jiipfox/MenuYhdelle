@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (main.createNewUser(name, pass, co2Obj)){
                     System.out.println("New user created.");
-                    main.saveDb(getApplicationContext());
+                    main.saveDb(getApplicationContext().getFilesDir());
                 } else {
                     System.out.println("New user not created!");
                 }

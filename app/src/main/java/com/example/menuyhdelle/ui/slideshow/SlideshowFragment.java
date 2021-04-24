@@ -18,8 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.menuyhdelle.DishIngredient;
 import com.example.menuyhdelle.Ingredient;
 import com.example.menuyhdelle.IngredientAdapter;
+import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class SlideshowFragment extends Fragment {
@@ -27,22 +29,29 @@ public class SlideshowFragment extends Fragment {
     private SlideshowViewModel slideshowViewModel;
     ArrayAdapter<Ingredient> adapter;
     String searchQry;
+    MainClass main = MainClass.getMain();
+    private File path;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
         final ListView listView = root.findViewById(R.id.listview);
 
-        ArrayList<Ingredient> ingredientArrayList = new ArrayList<>();
-        Ingredient apple = new Ingredient("Omena");
-        Ingredient mincemeat = new Ingredient("Jauheliha");
-        Ingredient chickenbreast = new Ingredient("Kanafile");
-        ingredientArrayList.add(apple);
-        ingredientArrayList.add(mincemeat);
-        ingredientArrayList.add(chickenbreast);
+        // *** Clumsy way to store and load the ingredients as and example, ups here should be OSTOSLISTA ARRAY, not ingredient array, sorry..  ***
+        // 1) context
+        this.path = getContext().getApplicationContext().getFilesDir();
+
+        // 2) add needed
+        Ingredient apple = main.createIngredient("Omena", 1.0, "g", 1.1);
+        Ingredient mincemeat = main.createIngredient("Jauheliha", 999.9, "kg", 0.1);
+        Ingredient chickenbreast = main.createIngredient("Kanafile", 10.100, "10kg", 100.1);
+
+        // 3) store when all done
+        main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
+
+        // 4) load and use the arrray list
+        ArrayList<Ingredient> ingredientArrayList = main.loadIngredients(this.path);
 
         // Create the adapter to convert the array to views
         IngredientAdapter adapter = new IngredientAdapter(this.getContext(), ingredientArrayList);
@@ -59,6 +68,8 @@ public class SlideshowFragment extends Fragment {
             }
         });
 
+        main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
+
         // Export button to export files in CSV
 
         Button exportBtn = root.findViewById(R.id.exportBtn);
@@ -73,6 +84,4 @@ public class SlideshowFragment extends Fragment {
 
         return root;
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.menuyhdelle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +11,8 @@ import com.example.menuyhdelle.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -105,4 +108,8 @@ public class MainActivity extends AppCompatActivity {
     public Double getCurrentUserCo2Target(){
         return main.getCurrentUserTergetCo2Value();
     }
+    public File fuckThePath(){
+        return getApplicationContext().getFilesDir();
+    }
+
 }

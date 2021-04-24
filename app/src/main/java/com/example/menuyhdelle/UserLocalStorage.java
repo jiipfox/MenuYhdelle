@@ -22,53 +22,49 @@ import java.util.regex.Pattern;
  */
 public class UserLocalStorage {
     private static String filename = "user.json";
-
     private ArrayList<User> userList = new ArrayList<>(); // todo replace with seeking the data from test.json
+    FileWriterReader io = new FileWriterReader();
+    //private File path;
 
     /**
-     * Get path from context, create json from the users list and store it to
+     * Get path from context, create json string from the users list and store it to file
      *
-     * @param c context to get the user application file location
-     * @return
+     * @return true if successfull
      */
-    public boolean writeJson(Context c) {
-        System.out.println("Write json to : " + c.getFilesDir());
-        File path = c.getFilesDir();
-        File file = new File(path, filename);
-
+    public boolean writeJson(File definedPath) {
+        System.out.println("PAAAAATH = " + definedPath);
+        File file = new File(definedPath, filename);
         String jsonString = userListToJson(this.userList);
-        System.out.println("Store JSON as: ");
-        System.out.println(jsonString);
 
-        try {
-            FileOutputStream fos = new FileOutputStream(file); //c.getApplicationContext().openFileOutput(filename,
-                                   //                                         c.getApplicationContext().MODE_PRIVATE);
-            fos.write(jsonString.getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("Write json to: " + file.toPath());
+        System.out.println("Data: " + jsonString);
+
+        if (io.write(file, jsonString, false)){
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
     /**
+     * Get path from context, create user list from json and store it locally
      *
-     * @param c context to get the user application file location
+     * @param path , app context files directory
      * @return
      */
-    public boolean readJson(Context c) {
-        String testUserString = readJsonFile(c);
-        System.out.println("Before"); // todo test
-        System.out.println(testUserString);
-        this.userList = JsonToUserList(testUserString);
+    public boolean readJson(File definedPath) {
+        File file = new File(definedPath, filename);
+        System.out.println("File path = " + file.toPath());
 
-        System.out.println("User names:"); // todo test prints
+        String userString = io.read(file);
+        this.userList = JsonToUserList(userString);
+
         if (userList == null){
             System.out.println("User list is null!"); // todo test prints
             return false;
         }
 
+        System.out.println("User names:"); // todo test prints
         for (int i = 0; i < userList.size(); i++) {
             System.out.println("Name (" + i + ") = " + userList.get(i).getUserName());
         }
@@ -76,6 +72,7 @@ public class UserLocalStorage {
         return true;
     }
 
+    /**
     public String readJsonFile(Context c) {
         String json = null;
         try {
@@ -83,6 +80,7 @@ public class UserLocalStorage {
             File file = new File(path, filename);
             System.out.println("File path = " + file.toPath());
 
+            json = read
             InputStream is = new FileInputStream(file);
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -94,7 +92,7 @@ public class UserLocalStorage {
             return null;
         }
         return json;
-    }
+    }*/
 
     /**
      * todo:
