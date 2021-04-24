@@ -14,7 +14,6 @@ import com.example.menuyhdelle.IngredientAdapter;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
-import com.example.menuyhdelle.ui.shoppinglist.ShoppingListViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,8 +43,8 @@ public class ShoppingListFragment extends Fragment {
 
         // 2) add needed
         Ingredient apple = main.createIngredient("Omena", 1.0, "g", 1.1);
-        Ingredient mincemeat = main.createIngredient("Jauheliha", 999.9, "kg", 0.1);
-        Ingredient chickenbreast = main.createIngredient("Kanafile", 10.100, "10kg", 100.1);
+        Ingredient mincemeat = main.createIngredient("Jauheliha", 15.0, "kg", 0.1);
+        Ingredient chickenbreast = main.createIngredient("Kanafile", 100.1, "10kg", 100.1);
 
         // 3) store when all done
         main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
@@ -66,11 +65,11 @@ public class ShoppingListFragment extends Fragment {
         main.createDish("Kaktus-sieni-kikkare", ingredientArrayList2,"Kasvis", "Ruoka??", "keitä ja valmista");
 
         // test with some variations
-        main.createIngredient("Vesi", 0.3, "dl", 9.9);
+        main.createIngredient("Vesi", 100, "dl", 9.9);
         main.storeIngredients(path);
 
-        ingredientArrayList = main.loadIngredients(path);
-        main.createDish("Parempi-keitto", ingredientArrayList,"Kasvis", "Juoma??", "kaada ja nauti");
+        ingredientArrayList2 = main.loadIngredients(path);
+        main.createDish("Parempi-keitto", ingredientArrayList2,"Kasvis", "Juoma??", "kaada ja nauti");
         main.storeDishes(path);
         ArrayList<Dish> dishes = main.loadDishes(path);
 
