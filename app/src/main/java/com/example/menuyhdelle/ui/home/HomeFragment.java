@@ -104,7 +104,6 @@ public class HomeFragment extends Fragment {
                 // Add dish / dishname to array and finally update listView adapter
                 tempMenuList.add(dish);
                 itemsAdapter.notifyDataSetChanged();
-                System.out.println(tempMenuList);
             }
         });
         genButton = root.findViewById(R.id.genMenu);
@@ -116,6 +115,7 @@ public class HomeFragment extends Fragment {
                 created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
                 Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
                 main.assignMenuToCurrentUser(erikoisMenu);
+                main.saveDb(path);
             }
         });
         return root;
