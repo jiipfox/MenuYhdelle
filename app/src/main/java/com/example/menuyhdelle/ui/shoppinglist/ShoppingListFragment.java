@@ -1,132 +1,97 @@
 package com.example.menuyhdelle.ui.shoppinglist;
 
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.menuyhdelle.Dish;
 import com.example.menuyhdelle.Ingredient;
+import com.example.menuyhdelle.IngredientAdapter;
+import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 
 public class ShoppingListFragment extends Fragment {
 
     private ShoppingListViewModel shoppingListViewModel;
-    ArrayAdapter<String> adapter;
-    ArrayList<Ingredient> StringArrayList;
-    String searchQry;
-    ListView listView;
-    Button addButton, delButton, expButton;
+    ArrayAdapter<Ingredient> adapter;
+    MainClass main = MainClass.getMain();
+    private File path;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        shoppingListViewModel =
-                new ViewModelProvider(this).get(ShoppingListViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        shoppingListViewModel = new ViewModelProvider(this).get(ShoppingListViewModel.class);
         View root = inflater.inflate(R.layout.fragment_shoppinglist, container, false);
 
+        final ListView listView = root.findViewById(R.id.listview);
 
-        findViewsById(root);
+        // *** Clumsy way to store and load the ingredients as and example, ups here should be OSTOSLISTA ARRAY, not ingredient array, sorry..  ***
+        // 1) context
+        this.path = getContext().getApplicationContext().getFilesDir();
 
-        ArrayList<String> StringArrayList = new ArrayList<>();
-        StringArrayList.add("Omena");
-        StringArrayList.add("Jauheliha");
-        StringArrayList.add("Broileri");
+        // 2) add needed
+        Ingredient apple = main.createIngredient("Omena", 1.0, "g", 1.1);
+        Ingredient mincemeat = main.createIngredient("Jauheliha", 999.9, "kg", 0.1);
+        Ingredient chickenbreast = main.createIngredient("Kanafile", 10.100, "10kg", 100.1);
 
-        adapter = new ArrayAdapter<String>(this.getContext(),
-                android.R.layout.simple_list_item_multiple_choice, StringArrayList);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        // 3) store when all done
+        main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
+
+        // 4) load and use the array list
+        ArrayList<Ingredient> ingredientArrayList = main.loadIngredients(this.path);
+
+        // Create the adapter to convert the array to views
+        IngredientAdapter adapter = new IngredientAdapter(this.getContext(), ingredientArrayList);
+        // Attach the adapter to a ListView
         listView.setAdapter(adapter);
 
-        // Write item name to add
 
-        EditText writeItem = root.findViewById(R.id.writeItemName);
+        /* ****TEST DISHES ***** */
+        // load ingredient´s
+        ArrayList<Ingredient> ingredientArrayList2 = main.loadIngredients(path);
+        // create dish
+        main.createDish("Kaktus-sieni-kikkare", ingredientArrayList2,"Kasvis", "Ruoka??", "keitä ja valmista");
 
-        // Add item button for adding an item to list
+        // test with some variations
+        main.createIngredient("Vesi", 0.3, "dl", 9.9);
+        main.storeIngredients(path);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        ingredientArrayList = main.loadIngredients(path);
+        main.createDish("Parempi-keitto", ingredientArrayList,"Kasvis", "Juoma??", "kaada ja nauti");
+        main.storeDishes(path);
+        ArrayList<Dish> dishes = main.loadDishes(path);
+
+        // Clear button for clearing shopping list
+
+        Button clearBtn = root.findViewById(R.id.emptyBtn);
+        clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String itemName = writeItem.getText().toString();
-                if (itemName.isEmpty()){
-                    Toast toast = Toast.makeText(getContext(),"Kirjoita nimi",Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    StringArrayList.add(itemName);
-                    adapter.notifyDataSetChanged();
-                    writeItem.setText("");
-                }
+                adapter.clear();
             }
         });
 
-        // Delete selected items from list
+        // Export button to export files in CSV
 
-        delButton.setOnClickListener(new View.OnClickListener() {
+        Button exportBtn = root.findViewById(R.id.exportBtn);
+        exportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] list = returnList(v);
-
-                if (list.length==0){
-                    Toast toast = Toast.makeText(getContext(),"Ei poistettavaa",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-
-                for(String i : list){
-                    StringArrayList.remove(i);
-                    adapter.notifyDataSetChanged();
-                }
-
+                // Export method here
             }
         });
 
-        // Export data into CSV-file
-
+        // Search items
 
         return root;
-
     }
-
-    private void findViewsById(View v) {
-        listView = v.findViewById(R.id.listView);
-        //expButton = v.findViewById(R.id.exportBtn);
-        delButton = v.findViewById(R.id.emptyBtn);
-        addButton = v.findViewById(R.id.addItemBtn);
-    }
-
-    // Returns list of selected items to either export or delete from listview
-
-    public String[] returnList(View v) {
-        SparseBooleanArray checked = listView.getCheckedItemPositions();
-        ArrayList<String> selectedItems = new ArrayList<String>();
-        for (int i = 0; i < checked.size(); i++) {
-            // Item position in adapter
-            int position = checked.keyAt(i);
-            // Add item if it is checked i.e.) == TRUE!
-            if (checked.valueAt(i))
-                selectedItems.add(adapter.getItem(position));
-        }
-
-        String[] outputStrArr = new String[selectedItems.size()];
-
-        for (int i = 0; i < selectedItems.size(); i++) {
-            outputStrArr[i] = selectedItems.get(i);
-        }
-        return outputStrArr;
-    }
-
-
 }
