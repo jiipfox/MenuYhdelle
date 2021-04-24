@@ -9,14 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.menuyhdelle.Dish;
 import com.example.menuyhdelle.Ingredient;
@@ -26,9 +18,12 @@ import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Create weekly menu by selecting dishes for the appropriate sections and display how it scales to the co2 target.
@@ -110,10 +105,17 @@ public class HomeFragment extends Fragment {
         genButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("CLICKED CLICK");
+                Double co2 = 0.0;
                 Date created = new Date();
-                System.out.println(tempMenuList);
+                for (int i = 0; i < tempMenuList.size(); i++){
+                    System.out.println("("+i+") = " + tempMenuList.get(i).getName());
+                    System.out.println("   co2 = " + tempMenuList.get(i).getCO2());
+                }
                 created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
                 Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
+                co2 = erikoisMenu.getCO2();
+                System.out.println(" Hiilidioksiidit käyttäjiiilllle = " + co2);
                 main.assignMenuToCurrentUser(erikoisMenu);
                 main.saveDb(path);
             }

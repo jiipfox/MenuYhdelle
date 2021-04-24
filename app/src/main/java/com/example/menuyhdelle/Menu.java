@@ -11,6 +11,7 @@ public class Menu {
     // private Class user;
     private Date date;
     private String name;
+    private Double co2;
 
     // *** Constructors ***
     public Menu() {
@@ -22,33 +23,35 @@ public class Menu {
         this.name = n;
         this.dishes = dish;
         this.date = date;
-        this.addDish(null);
     }
 
     // *** Methods ***
 
     /**
-     * Todo implementation
-     * @return co2 foot print in double
+     * We need to do this everytime becaue menu might be created without adding dishes using addDish
+     * @return co2 foot print of dishes
      */
-    public Double getMenuCO2() {
-        Double co2FootPrint = 100.0;
+    public Double getCO2() {
+        Double calculated = 0.0;
 
-        return co2FootPrint;
+        if (this.dishes != null){
+            for (int i = 0; i < this.dishes.size(); i++){
+                calculated = calculated + this.dishes.get(i).getCO2();
+            }
+        }
 
+        return calculated;
     }
 
     public void addDish(Dish dish) {
-
         if (dish == null){ // fail safer?
             return;
         }
+        this.co2 = this.co2 + dish.getCO2();
         this.dishes.add(dish);
     }
 
-    public void removeDish() {
-
-    }
+    public void removeDish() {   }
 
     public ArrayList<Dish> getDishes() {
         return dishes;

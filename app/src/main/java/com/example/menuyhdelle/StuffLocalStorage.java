@@ -1,7 +1,5 @@
 package com.example.menuyhdelle;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -105,11 +103,6 @@ public class StuffLocalStorage {
         if (this.dishes == null){
             System.out.println("Dish list is null!"); // todo test prints
             return null;
-        }
-
-        System.out.println("Dish names:"); // todo test prints
-        for (int i = 0; i < this.dishes.size(); i++) {
-            System.out.println("Name (" + i + ") = " + this.dishes.get(i).getName());
         }
 
         return this.dishes;
