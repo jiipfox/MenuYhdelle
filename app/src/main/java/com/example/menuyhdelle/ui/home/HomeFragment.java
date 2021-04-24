@@ -1,12 +1,17 @@
 package com.example.menuyhdelle.ui.home;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,10 +29,14 @@ import com.example.menuyhdelle.MainActivity;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
+import com.ramijemli.percentagechartview.PercentageChartView;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -84,6 +93,10 @@ public class HomeFragment extends Fragment {
         ListView listView = root.findViewById(R.id.mealsToday);
         listView.setAdapter(itemsAdapter);
 
+        // Get ring chart
+
+        PercentageChartView ringChart = root.findViewById(R.id.view_id);
+
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -104,21 +117,53 @@ public class HomeFragment extends Fragment {
                 // Add dish / dishname to array and finally update listView adapter
                 tempMenuList.add(dish);
                 itemsAdapter.notifyDataSetChanged();
+                Double co2Goal = main.getCurrentUserTergetCo2Value()/365;
+                Double disCo2 = dish.getCO2();
+                Double curCo2 = co2Goal-disCo2;
+                Double progCo2 = curCo2/co2Goal;
+                
+                ringChart.setProgress(progCo2.floatValue(), true);
             }
         });
         genButton = root.findViewById(R.id.genMenu);
         genButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date created = new Date();
-                System.out.println(tempMenuList);
-                created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
-                Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
-                main.assignMenuToCurrentUser(erikoisMenu);
-                main.saveDb(path);
+                EditText eText = root.findViewById(R.id.pickDate);
+                try {
+                    Date created = new SimpleDateFormat("dd/MM/yyyy").parse(eText.getText().toString());
+                    //created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
+                    Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
+                    main.assignMenuToCurrentUser(erikoisMenu);
+                    main.saveDb(path);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        EditText eText = root.findViewById(R.id.pickDate);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                DatePickerDialog picker = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
             }
         });
         return root;
     }
 
 }
+

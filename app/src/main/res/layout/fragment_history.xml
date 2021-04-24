@@ -26,10 +26,10 @@
             android:layout_margin="20dp"
             android:orientation="horizontal">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.github.mikephil.charting.charts.BarChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/lineChart"/>
+                android:id="@+id/barChart"/>
 
         </LinearLayout>
 
@@ -42,7 +42,6 @@
         app:layout_constraintTop_toBottomOf="@id/profileBackground">
 
         <LinearLayout
-            android:id = "@+id/relativeLayout1"
             android:layout_width = "fill_parent"
             android:layout_height = "wrap_content"
             android:background = "@color/purple_700" >
@@ -50,7 +49,7 @@
             <TextView
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
-                android:layout_weight = "1"
+                android:layout_weight = "2"
                 android:gravity = "center"
                 android:padding = "5dp"
                 android:textColor = "#ffffff" />
@@ -66,7 +65,39 @@
             <TextView
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
-                android:layout_weight = "1.5"
+                android:layout_weight = "1"
+                android:gravity = "center"
+                android:padding = "5dp"
+                android:textColor = "#ffffff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id = "@+id/relativeLayout1"
+            android:layout_width = "fill_parent"
+            android:layout_height = "wrap_content"
+            android:background = "@color/purple_700" >
+
+            <TextView
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight = "2"
+                android:gravity = "center"
+                android:padding = "5dp"
+                android:textColor = "#ffffff" />
+
+            <TextView
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight = "2"
+                android:gravity = "center"
+                android:padding = "5dp"
+                android:textColor = "#ffffff"/>
+
+            <TextView
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight = "1"
                 android:gravity = "center"
                 android:padding = "5dp"
                 android:textColor = "#ffffff" />

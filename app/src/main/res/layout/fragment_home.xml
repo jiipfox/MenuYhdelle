@@ -12,19 +12,20 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_500"
         android:paddingBottom="20dp"
-        android:paddingTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center">
 
         <LinearLayout
+            android:id="@+id/linlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center">
 
             <Button
+                android:id="@+id/dayBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -32,6 +33,7 @@
                 android:text="Päivä" />
 
             <Button
+                android:id="@+id/weekBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -39,6 +41,7 @@
                 android:text="Viikko" />
 
             <Button
+                android:id="@+id/monthBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -50,32 +53,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="60dp"
-            android:gravity="center">
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_arrow_left_24"
-                >
-            </ImageButton>
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:layout_alignStart="@+id/linlay">
 
-            <TextView
+            <EditText
+                android:id="@+id/pickDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="21.4.2021"
+                android:focusable="false"
+                android:gravity="center"
+                android:ems="10"
+                android:layout_margin="5dp"
+                android:hint="Valitse päivämäärä"
                 android:textColor="#FFF"
                 android:textSize="18dp" />
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_arrow_right_24">
-            </ImageButton>
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="110dp"
             android:gravity="center">
 
             <com.ramijemli.percentagechartview.PercentageChartView

@@ -1,6 +1,7 @@
 package com.example.menuyhdelle;
 
 import android.app.Activity;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
 
-    public ArrayList<Model> productList;
+    public ArrayList<Menu> productList;
     Activity activity;
 
-    public ListViewAdapter(Activity activity, ArrayList<Model> productList) {
+    public ListViewAdapter(Activity activity, ArrayList<Menu> productList) {
         super();
         this.activity = activity;
         this.productList = productList;
@@ -52,18 +53,16 @@ public class ListViewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.mDate = (TextView) convertView.findViewById(R.id.date);
             holder.mItem = (TextView) convertView.findViewById(R.id.item);
-            holder.mCo2 = (TextView) convertView
-                    .findViewById(R.id.co2);
+            holder.mCo2 = (TextView) convertView.findViewById(R.id.co2);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Model item = productList.get(position);
-        holder.mDate.setText(item.getsNo().toString());
-        holder.mItem.setText(item.getProduct().toString());
-        holder.mCo2.setText(item.getCategory().toString());
-
+        Menu item = productList.get(position);
+        holder.mDate.setText(DateFormat.format("dd MMMM yyyy", item.getDate()).toString());
+        holder.mItem.setText(item.getName());
+        holder.mCo2.setText(item.getMenuCO2().toString());
         return convertView;
     }
 }
