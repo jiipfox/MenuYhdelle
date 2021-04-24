@@ -95,35 +95,6 @@ public class ShoppingListFragment extends Fragment {
 
         // Export data into CSV-file
 
-        /*
-
-        expButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] list = returnList(v);
-
-                try {
-
-                    BufferedWriter br = new BufferedWriter(new FileWriter(getContext().getFilesDir() + "myfile.csv"));
-                    StringBuilder sb = new StringBuilder();
-
-                    // Append strings from array
-                    for (String element : list) {
-                        sb.append(element);
-                        sb.append(", \n");
-                    }
-
-                    br.write(sb.toString());
-                    br.close();
-                } catch (FileNotFoundException ex){
-                    System.out.println(ex.toString());
-                } catch (IOException ex){
-                    System.out.println(ex.toString());
-                }
-            }
-        });
-
-         */
 
         return root;
 
