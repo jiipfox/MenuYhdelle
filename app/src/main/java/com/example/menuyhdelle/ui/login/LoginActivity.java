@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
 
     Button loginBtn;
-    TextView forgotPswd, createUser;
+    TextView createUser;
     EditText editTextUser, editTextPassword;
 
     @Override
@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Find elements by their ID's.
         loginBtn = findViewById(R.id.loginButton);
-        forgotPswd = findViewById(R.id.forgotPsw);
         createUser = findViewById(R.id.createUser);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextUser = findViewById(R.id.editTextUser);
@@ -60,22 +59,16 @@ public class LoginActivity extends AppCompatActivity {
                     //String name = main.getUserName();
                     System.out.println("Login succeeded, welcome " + name);
                     text = "Kirjautuminen onnistui!";
-                } else{
-                    System.out.println("Login NOT succeeeded.");
+                    makeToast(text);
+                    loginView(v);
+                }   else{
+                    text ="Kirjautuminen epäonnistui!";
+                    makeToast(text);
                 }
-                makeToast(text);
-                loginView(v);
             }
         });
 
-        forgotPswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // How to get password back?
-                String text = "Salasanan palautus pyydetty!";
-                makeToast(text);
-            }
-        });
+
     }
 
     // This method will change view to RegisterActivity if user clicks createUser text.

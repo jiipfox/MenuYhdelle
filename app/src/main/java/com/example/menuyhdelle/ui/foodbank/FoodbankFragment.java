@@ -73,13 +73,6 @@ public class FoodbankFragment extends Fragment {
             }
         });
 
-        Button addBtn = root.findViewById(R.id.addToListBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return root;
     }

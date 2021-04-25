@@ -15,15 +15,34 @@
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/simpleSearchView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        </androidx.appcompat.widget.SearchView>
+        <Spinner
+            android:id="@+id/ingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="Valitse raaka-aine"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="Lisää"
+            android:layout_gravity="end"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/green"/>
+        </LinearLayout>
         <ListView
             android:layout_marginTop="65dp"
+            android:layout_marginBottom="65dp"
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
@@ -43,18 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="Tyhjennä tiedot"
+            android:text="Poista"
             android:textAllCaps="false"
             android:backgroundTint="#c21717" />
-
-        <Button
-            android:id="@+id/exportBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Vie tiedot"
-            android:textAllCaps="false"
-            android:backgroundTint="#17C25B" />
 
     </LinearLayout>
 

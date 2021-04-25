@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
@@ -55,13 +56,17 @@ public class RegisterActivity extends AppCompatActivity {
                 // Call abstraction, create new user and store the database
                 if (main.createNewUser(name, pass, co2Obj)){
                     System.out.println("New user created.");
+
+                    // Save user to database and display toast "User successfully created" or some error
+                    // if any of the fields are left unfinished.
+
                     main.saveDb(getApplicationContext().getFilesDir());
+                    makeToast("Käyttäjä luotu, kirjaudu sisään palaamalla kirjautumissivulle.");
                 } else {
+                    makeToast("Tapahtui virhe, käyttäjää ei luotu.");
                     System.out.println("New user not created!");
                 }
 
-                // Save user to database and display toast "User successfully created" or some error
-                // if any of the fields are left unfinished.
             }
         });
     }
@@ -72,4 +77,10 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivityForResult(intent, 1);
     }
+
+    public void makeToast(String text){
+        Toast toast = Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
 }

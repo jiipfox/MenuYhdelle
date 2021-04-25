@@ -1,6 +1,9 @@
 package com.example.menuyhdelle.ui.home;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.format.DateFormat;
@@ -14,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.menuyhdelle.Dish;
 import com.example.menuyhdelle.Ingredient;
@@ -71,8 +75,6 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
         // Load dishes and store in ArrayList to use in Spinner
 
         ArrayList<Dish> dishes = main.loadDishes(path);
@@ -91,11 +93,12 @@ public class HomeFragment extends Fragment {
         // Create adapter for listview to update based on selection + button.
 
         ArrayAdapter<Dish> itemsAdapter = new ArrayAdapter<Dish>(getContext(), android.R.layout.simple_list_item_1, tempMenuList);
-        ListView listView = root.findViewById(R.id.mealsToday);
+        listView = root.findViewById(R.id.mealsToday);
         listView.setAdapter(itemsAdapter);
 
         PercentageChartView ringChart = root.findViewById(R.id.view_id);
-        Double co2Goal = main.getCurrentUserTergetCo2Value();
+        Double co2Goal = main.getCurrentUserTergetCo2Value()*1000/365;
+
         double cumSum = 0;
 
         spinner.setAdapter(adapter);
@@ -110,6 +113,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
         button = root.findViewById(R.id.addButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +122,19 @@ public class HomeFragment extends Fragment {
                 // Add dish / dishname to array and finally update listView adapter
                 tempMenuList.add(dish);
                 itemsAdapter.notifyDataSetChanged();
-                double cumSum = 0f;
+                double cumSum = 0.0;
                 for (Dish i : tempMenuList){
                     double temp = i.getCO2();
                     cumSum += temp;
                 }
                 double percentageOfTotal = cumSum/co2Goal;
-                ringChart.setProgress((float) percentageOfTotal, true);
+                makeToast("Lisätty ateria: " + dish.getName() + " CO2: " + dish.getCO2() +"\n"
+                        + "Päivittäistä kulutusta jäljellä: " + (co2Goal-cumSum));
+                try {
+                    ringChart.setProgress((float) percentageOfTotal, true);
+                } catch (IllegalArgumentException e){
+                    makeToast("Päivittäinen päästömäärä täynnä.");
+                }
             }
         });
 
@@ -149,7 +159,7 @@ public class HomeFragment extends Fragment {
                     //created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
                     Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
                     co2 = erikoisMenu.getCO2();
-                    System.out.println(" Hiilidioksiidit käyttäjiiilllle = " + co2);
+                    System.out.println("Hiilidioksiidit käyttäjillle = " + co2);
                     main.assignMenuToCurrentUser(erikoisMenu);
                     main.saveDb(path);
                 } catch (ParseException e) {
@@ -181,4 +191,8 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    public void makeToast(String text){
+        Toast toast = Toast.makeText(getContext(),text,Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }

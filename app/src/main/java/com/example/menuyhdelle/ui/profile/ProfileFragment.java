@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
             final EditText co2Goal = root.findViewById(R.id.co2Goal);
 
             String uName = userName.getText().toString();
-            Double coGoal = Double.valueOf(co2Goal.getText().toString());
+            String coGoal = co2Goal.getText().toString();
 
             // GET AND SET USER INFORMATION METHODS HERE BY CLICKING BUTTON
 
