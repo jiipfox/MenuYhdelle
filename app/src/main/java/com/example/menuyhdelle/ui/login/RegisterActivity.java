@@ -53,6 +53,13 @@ public class RegisterActivity extends AppCompatActivity {
                 double co2Obj = Double.parseDouble(editTextCO2.getText().toString());
                 boolean bool = checkBox.isChecked();
 
+                String coStr = editTextCO2.getText().toString();
+                String boolStr = String.valueOf(bool);
+
+                if(name.isEmpty() | pass.isEmpty() | coStr.isEmpty() | boolStr.isEmpty()){
+                    makeToast("Täytä kaikki tarvittavat kentät!");
+                }
+
                 // Call abstraction, create new user and store the database
                 if (main.createNewUser(name, pass, co2Obj)){
                     System.out.println("New user created.");

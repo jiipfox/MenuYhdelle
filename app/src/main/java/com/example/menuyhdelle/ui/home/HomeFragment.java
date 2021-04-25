@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
                 try {
                     ringChart.setProgress((float) percentageOfTotal, true);
                 } catch (IllegalArgumentException e){
-                    makeToast("Päivittäinen päästömäärä täynnä.");
+                    makeToast("Päivittäinen päästömäärä täynnä tai se menisi yli tämän aterian jälkeen.");
                 }
             }
         });
