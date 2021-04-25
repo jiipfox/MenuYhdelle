@@ -63,6 +63,7 @@ public class UserLocalStorage {
         System.out.println("User names:"); // todo test prints
         for (int i = 0; i < userList.size(); i++) {
             System.out.println("Name (" + i + ") = " + userList.get(i).getUserName());
+            System.out.println("Name (" + i + ") = " + userList.get(i).getMenus());
         }
 
         return true;
