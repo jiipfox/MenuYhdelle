@@ -3,6 +3,7 @@ package com.example.menuyhdelle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.navigation.NavController;
@@ -23,6 +25,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -32,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         File path = getApplicationContext().getFilesDir();
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         main.createMenu();
 
         // Test cryptos
@@ -48,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         setContentView(R.layout.activity_leftist_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                ReadXML.readTheatreAreaXML();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -113,5 +120,7 @@ public class MainActivity extends AppCompatActivity {
     public File fuckThePath(){
         return getApplicationContext().getFilesDir();
     }
+
+
 
 }

@@ -3,6 +3,7 @@ package com.example.menuyhdelle.ui.home;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +123,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         genButton = root.findViewById(R.id.genMenu);
         genButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +131,10 @@ public class HomeFragment extends Fragment {
                 System.out.println("CLICKED CLICK");
                 Double co2 = 0.0;
                 EditText eText = root.findViewById(R.id.pickDate);
+
+                // Generate menu and get CO2 of each dish, save information on current user's JSON
+                // for later use.
+
                 try {
                     Date created = new SimpleDateFormat("dd/MM/yyyy").parse(eText.getText().toString());
                     for (int i = 0; i < tempMenuList.size(); i++){

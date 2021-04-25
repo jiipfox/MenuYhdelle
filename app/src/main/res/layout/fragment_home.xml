@@ -85,7 +85,7 @@
                 app:pcv_orientation="clockwise"
                 app:pcv_animDuration="800"
                 app:pcv_animInterpolator="anticipate_overshoot"
-                app:pcv_progress="75"
+                app:pcv_progress="0"
                 app:pcv_startAngle="270"
                 app:pcv_backgroundBarColor="@color/purple_700"
                 app:pcv_textSize="20dp"
