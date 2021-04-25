@@ -5,11 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -198,7 +194,7 @@ public class UserLocalStorage {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(pass);
 
-        if (pass.length() > 4) { //&& matcher.matches()) { // todo shit doesnt work
+        if (pass.length() > 1) { //&& matcher.matches()) { // todo shit doesnt work
             return true;
         }
         return false;

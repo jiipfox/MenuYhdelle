@@ -42,12 +42,12 @@ public class ShoppingListFragment extends Fragment {
         this.path = getContext().getApplicationContext().getFilesDir();
 
         // 2) add needed
-        Ingredient apple = main.createIngredient("Omena", 1.0, "g", 1.1);
-        Ingredient mincemeat = main.createIngredient("Jauheliha", 15.0, "kg", 0.1);
-        Ingredient chickenbreast = main.createIngredient("Kanafile", 100.1, "10kg", 100.1);
+        //Ingredient apple = main.createIngredient("Omena", 1.0, "g", 1.1);
+        //Ingredient mincemeat = main.createIngredient("Jauheliha", 15.0, "kg", 0.1);
+        //Ingredient chickenbreast = main.createIngredient("Kanafile", 100.1, "10kg", 100.1);
 
         // 3) store when all done
-        main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
+        //main.storeIngredients(this.path); // todo this is only for temporary location! onExitView or similar?
 
         // 4) load and use the array list
         ArrayList<Ingredient> ingredientArrayList = main.loadIngredients(this.path);
@@ -60,21 +60,20 @@ public class ShoppingListFragment extends Fragment {
 
         /* ****TEST DISHES ***** */
         // load ingredient´s
-        ArrayList<Ingredient> ingredientArrayList2 = main.loadIngredients(path);
+        //ArrayList<Ingredient> ingredientArrayList2 = main.loadIngredients(path);
         // create dish
-        main.createDish("Kaktus-sieni-kikkare", ingredientArrayList2,"Kasvis", "Ruoka??", "keitä ja valmista");
+        //main.createDish("Kaktus-sieni-kikkare", ingredientArrayList2,"Kasvis", "Ruoka??", "keitä ja valmista");
 
         // test with some variations
-        main.createIngredient("Vesi", 100, "dl", 9.9);
-        main.storeIngredients(path);
+        //main.createIngredient("Vesi", 100, "dl", 9.9);
+        //main.storeIngredients(path);
 
-        ingredientArrayList2 = main.loadIngredients(path);
-        main.createDish("Parempi-keitto", ingredientArrayList2,"Kasvis", "Juoma??", "kaada ja nauti");
-        main.storeDishes(path);
+        //ingredientArrayList2 = main.loadIngredients(path);
+        //main.createDish("Parempi-keitto", ingredientArrayList2,"Kasvis", "Juoma??", "kaada ja nauti");
+        //main.storeDishes(path);
         ArrayList<Dish> dishes = main.loadDishes(path);
 
         // Clear button for clearing shopping list
-
         Button clearBtn = root.findViewById(R.id.emptyBtn);
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override

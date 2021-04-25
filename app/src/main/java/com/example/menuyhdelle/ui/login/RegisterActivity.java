@@ -1,7 +1,5 @@
 package com.example.menuyhdelle.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +9,8 @@ import android.widget.TextView;
 
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
-import com.google.android.material.textfield.TextInputEditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,9 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainClass main = MainClass.getMain();
-        // main.createNewUser("Hillevi", "1234", 100.0);
-        //main.saveDb(getApplicationContext());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -52,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String pass = editTextPassword.getText().toString(); // todo where to hash?
                 double co2Obj = Double.parseDouble(editTextCO2.getText().toString());
 
+                // Call abstraction, create new user and store the database
                 if (main.createNewUser(name, pass, co2Obj)){
                     System.out.println("New user created.");
                     main.saveDb(getApplicationContext().getFilesDir());
