@@ -63,10 +63,15 @@ public class HomeFragment extends Fragment {
             System.out.println("Cannot retrieve co2 target value from Home view, or Co2 is zero");
         }
 
+        this.path = getContext().getApplicationContext().getFilesDir();
+
+        // Load ingredients database after login succeeded
+        main.loadIngredients(path);
+
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        this.path = getContext().getApplicationContext().getFilesDir();
+
 
         // Load dishes and store in ArrayList to use in Spinner
 

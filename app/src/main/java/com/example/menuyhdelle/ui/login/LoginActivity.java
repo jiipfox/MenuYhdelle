@@ -1,7 +1,5 @@
 package com.example.menuyhdelle.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +14,8 @@ import com.example.menuyhdelle.R;
 
 import java.io.File;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 // Todo: Is this the first activity that is loaded?
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,20 +27,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        File path = getApplicationContext().getFilesDir();
-        System.out.println("login activity, files TO THE " + path.toString());
-        MainClass main = MainClass.getMain();
-        main.createNewUser("Teppo", "123456", 100.0);
-        main.saveDb(path);
-        main.loadDb(path);
-
         // Find elements by their ID's.
         loginBtn = findViewById(R.id.loginButton);
         forgotPswd = findViewById(R.id.forgotPsw);
         createUser = findViewById(R.id.createUser);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextUser = findViewById(R.id.editTextUser);
+
+        File path = getApplicationContext().getFilesDir();
+        System.out.println("file context location:" + path.toString());
+        MainClass main = MainClass.getMain();
+        main.loadDb(path);
 
         createUser.setOnClickListener(new View.OnClickListener() {
             @Override

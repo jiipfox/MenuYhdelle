@@ -36,9 +36,9 @@ public class MainClass {
     }
 
     /**
-     * Initialize database loading things
-     * todo change so that only inits are done and no database is read
-     * @return
+     * Read user json file
+     * todo temporary solution
+     * @return always true
      */
     public boolean loadDb(File path){
         System.out.println("load db");
@@ -47,9 +47,9 @@ public class MainClass {
     }
 
     /**
-     * Initialize database writing
-     * todo testing only atm
-     * @return
+     * Write user json file
+     * todo temporary solution
+     * @return always true
      */
     public boolean saveDb(File path){
         System.out.println("save db");
@@ -74,11 +74,13 @@ public class MainClass {
         }
     }
 
-    // TODO store the user to db in here or in createUser function
+    /**
+     * Abstraction of user backend, create new function
+     * @return true if succesfull
+     */
     public boolean createNewUser(String name, String pass, double co2obj)
     {
         if (userBackEnd.createUser(name, pass, co2obj)){
-            System.out.println("Succesfully created user");
             return true;
         } else {
             System.out.println("Cannot create user");
