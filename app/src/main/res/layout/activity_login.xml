@@ -88,15 +88,6 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/forgotPsw"
-                android:text="Unohtuiko salasana?"
-                android:textColor="#FFF"
-                android:textSize="17dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
 
             <Button
                 android:id="@+id/loginButton"

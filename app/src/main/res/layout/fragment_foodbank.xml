@@ -61,21 +61,6 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp">
-                <Button
-                    android:id="@+id/addToListBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lisää ostoslistaan"
-                    android:backgroundTint="@color/green"
-                    android:textAllCaps="false">
-                </Button>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

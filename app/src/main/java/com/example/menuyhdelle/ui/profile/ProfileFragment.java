@@ -23,13 +23,14 @@ public class ProfileFragment extends Fragment {
             profileViewModel =
                     new ViewModelProvider(this).get(ProfileViewModel.class);
             View root = inflater.inflate(R.layout.fragment_profile, container, false);
-            final EditText UserName = root.findViewById(R.id.userName);
-            profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-                @Override
-                public void onChanged(@Nullable String s) {
-                    UserName.setText(s);
-                }
-            });
+            final EditText userName = root.findViewById(R.id.userName);
+            final EditText co2Goal = root.findViewById(R.id.co2Goal);
+
+            String uName = userName.getText().toString();
+            Double coGoal = Double.valueOf(co2Goal.getText().toString());
+
+            // GET AND SET USER INFORMATION METHODS HERE BY CLICKING BUTTON
+
             return root;
         }
     }

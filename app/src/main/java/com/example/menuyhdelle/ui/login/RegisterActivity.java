@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button createUserBtn;
     TextView alrdyHaveUser;
     EditText editTextName, editTextUser, editTextPassword, editTextCO2;
+    CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextUser = findViewById(R.id.editTextUser);
+        checkBox = findViewById(R.id.booleanValue);
 
         alrdyHaveUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String name = editTextUser.getText().toString();
                 String pass = editTextPassword.getText().toString(); // todo where to hash?
                 double co2Obj = Double.parseDouble(editTextCO2.getText().toString());
+                boolean bool = checkBox.isChecked();
 
                 // Call abstraction, create new user and store the database
                 if (main.createNewUser(name, pass, co2Obj)){

@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReadXML.readTheatreAreaXML();
-                Snackbar.make(view, "Tiesitkö? Suomalaisen keskiverto hiilijalanjälki on " + 1500 + "kg CO2 vuodessa.", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Tiesitkö? Suomalaisen keskimääräinen hiilijalanjälki on " + 1500 + "kg CO2 vuodessa.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -78,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
