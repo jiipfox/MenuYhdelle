@@ -162,6 +162,9 @@ public class HomeFragment extends Fragment {
                     System.out.println("Hiilidioksiidit käyttäjillle = " + co2);
                     main.assignMenuToCurrentUser(erikoisMenu);
                     main.saveDb(path);
+                    makeToast("Menu luotu ja tallennettu.");
+                    itemsAdapter.clear();
+                    ringChart.setProgress(0, true);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -186,6 +189,9 @@ public class HomeFragment extends Fragment {
                             }
                         }, year, month, day);
                 picker.show();
+                itemsAdapter.clear();
+                ringChart.setProgress(0, true);
+
             }
         });
         return root;
