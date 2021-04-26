@@ -45,6 +45,7 @@ public class HistoryFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+
                 String sDate = ((TextView)view.findViewById(R.id.date)).getText().toString();
                 String item = ((TextView)view.findViewById(R.id.item)).getText().toString();
                 String co2 = ((TextView)view.findViewById(R.id.co2)).getText().toString();

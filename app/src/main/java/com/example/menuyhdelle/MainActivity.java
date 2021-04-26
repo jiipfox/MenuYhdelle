@@ -34,19 +34,6 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         main.createMenu();
 
-        // Test cryptos
-        try {
-            Krypto krypt1x = new Krypto("agentti");
-            System.out.println("Salattu viesti: ");
-            String viesti = krypt1x.encrypt("Veri sensible!");
-
-            System.out.println("Salauksen purun jälkeen: ");
-            String purettuViesti = krypt1x.decrypt(viesti);
-            System.out.println(purettuViesti);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         setContentView(R.layout.activity_leftist_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

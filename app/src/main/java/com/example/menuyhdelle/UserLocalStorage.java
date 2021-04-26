@@ -20,8 +20,16 @@ public class UserLocalStorage {
     private static String filename = "user.json";
     private ArrayList<User> userList = new ArrayList<>();
     FileWriterReader io = new FileWriterReader();
-    //private File path;
+    Krypto krypt1x;
 
+    // Create passphrase for encoding and decoding
+    public UserLocalStorage(){
+        try {
+            krypt1x = new Krypto("salasana123");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Get path from context, create json string from the users list and store it to file
      *
@@ -70,33 +78,13 @@ public class UserLocalStorage {
     }
 
     /**
-    public String readJsonFile(Context c) {
-        String json = null;
-        try {
-            File path = c.getFilesDir();
-            File file = new File(path, filename);
-            System.out.println("File path = " + file.toPath());
-
-            json = read
-            InputStream is = new FileInputStream(file);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return json;
-    }*/
-
-    /**
      * todo:
      * - password verification
      * - check if user is already created, problems in the login phase otherwise
      */
     public boolean createUser(String name, String pass, double co2obj, String fullName, boolean preferLowCo2) {
+        String encodedPass = "";
+
         if (isValidName(name) == false) {
             System.out.println("Invalid user name.");
             return false;
@@ -112,6 +100,16 @@ public class UserLocalStorage {
             return false;
         }
 
+        // Encode password using given passphrase
+        try {
+            encodedPass = krypt1x.encrypt(pass);
+            System.out.println("encoded pass = " + encodedPass);
+        } catch (Exception e) {
+            System.out.println("Can't encode user password! Do what?");
+            e.printStackTrace();
+            return false;
+        }
+
         // For some reason if userlist is null, make some dummy user.
         if (userList == null){
             String dummy = "[{\"co2AnnualOjbective\":0.0, \"co2Cumulative\":0.0, \"password\":\"1\", \"userMenus\":[{\"date\":\"Jan 1, 1970 6:56:48 PM\", \"dishes\":[{\"diet\":\"\", \"ingredients\":[{\"co2\":0.0,\"name\":\"1\",\"price\":1,\"unitOfMeasure\":\"g\"}], \"name\":\"K\",\"recipe\":\"K\",\"type\":\"R\"}], \"name\":\"Erikois\"}], \"userName\":\"Teppo\"}]";
@@ -120,7 +118,7 @@ public class UserLocalStorage {
         }
 
         try{
-            User newUser = new User(name, pass, co2obj, fullName, preferLowCo2);
+            User newUser = new User(name, encodedPass, co2obj, fullName, preferLowCo2);
             userList.add(newUser);
             System.out.println("User list size in LoginActivity = " + userList.size());
         } catch (NullPointerException ei){
@@ -134,6 +132,7 @@ public class UserLocalStorage {
     public User loginUser(String loginName, String loginPass) {
         User user;
         boolean passOk = false;
+        String encodedPass;
         try {
             if (userList == null) {
                 System.out.println("Empty user list, add more users.");
@@ -144,6 +143,13 @@ public class UserLocalStorage {
                 System.out.println("Empty user list, add more users.");
                 return null;
             }
+
+            // Do not check the pass if not even valid
+            if (loginPass.length() <= 1){
+                return null;
+            }
+
+            System.out.println("Trying to login with =" + loginPass);
 
             for (int i = 0; i < userList.size(); i++) {
                 String userName = userList.get(i).getUserName();
@@ -167,8 +173,23 @@ public class UserLocalStorage {
         return null;
     }
 
+    /**
+     * Decrypt
+     * @param pass
+     * @param loginPass
+     * @return
+     */
     private boolean verifyPassword(String pass, String loginPass) {
-        if (pass.equals(loginPass)) {
+        String decoded;
+
+        try {
+            decoded = krypt1x.decrypt(pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (decoded.equals(loginPass)) {
             return true;
         } else {
             return false;
