@@ -213,22 +213,25 @@ public class UserLocalStorage {
     }
 
     /**
-     * Atleast 1 number, 1 alpha, 1 special, len > 4
-     *
-     * @param pass
+     * Password validator, see requirements below
+     * @param pass to check
      * @return true if valid
      */
     private boolean isValidPassword(String pass) {
         Pattern pattern;
         Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*[@_.]).*$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(pass);
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 8 characters
+                    "$");
+        return pattern.matcher(pass).matches();
 
-        if (pass.length() > 1) { //&& matcher.matches()) { // todo shit doesnt work
-            return true;
-        }
-        return false;
     }
 
     /**
