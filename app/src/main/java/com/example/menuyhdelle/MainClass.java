@@ -98,8 +98,8 @@ public class MainClass {
         return ingre;
     }
 
-    public boolean storeIngredients(File path){
-        stuffBackEnd.storeIngredients(path);
+    public boolean storeIngredients(File path, Boolean firstWrite){
+        stuffBackEnd.storeIngredients(path, firstWrite);
         return true;
     }
 
@@ -117,8 +117,8 @@ public class MainClass {
         return d;
     }
 
-    public boolean storeDishes(File path){
-        stuffBackEnd.storeDishes(path);
+    public boolean storeDishes(File path, Boolean append){
+        stuffBackEnd.storeDishes(path, append);
         return true;
     }
 

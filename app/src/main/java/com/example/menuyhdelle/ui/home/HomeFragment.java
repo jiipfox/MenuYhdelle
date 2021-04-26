@@ -1,12 +1,8 @@
 package com.example.menuyhdelle.ui.home;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +24,6 @@ import com.example.menuyhdelle.R;
 import com.ramijemli.percentagechartview.PercentageChartView;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,18 +38,20 @@ import androidx.lifecycle.ViewModelProvider;
  * Create weekly menu by selecting dishes for the appropriate sections and display how it scales to the co2 target.
  */
 public class HomeFragment extends Fragment {
-
     private HomeViewModel homeViewModel;
-    ArrayAdapter<Ingredient> adapter;
-    ArrayAdapter<String> arrAdapter;
-    MainClass main = MainClass.getMain();
     private File path;
     private Spinner spinner;
     private Button button, genButton;
     private ListView listView;
     private ArrayList<Dish> tempMenuList = new ArrayList<>();
+    MainClass main = MainClass.getMain();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ArrayAdapter<Dish> adapter;
+        ArrayList<Dish> tempMenuList;
+        ArrayAdapter<Dish> itemsAdapter;
+        PercentageChartView ringChart;
+        Double co2Goal;
         try {
             Double co2Target = ((MainActivity) getActivity()).getCurrentUserCo2Target();
             if (co2Target > 0.0){
@@ -70,36 +67,44 @@ public class HomeFragment extends Fragment {
         this.path = getContext().getApplicationContext().getFilesDir();
 
         // Load ingredients database after login succeeded
-        main.loadIngredients(path);
+        ArrayList<Ingredient> temp = main.loadIngredients(path);
+        if (temp != null){
+            if (temp.size() <= 1) {
+                System.out.println("User has no ingredients, make some basic ingredients!");
+            }
+        }
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Load dishes and store in ArrayList to use in Spinner
-
+        // Load dishes and store in ArrayList to use in Spinner, watchout for null
         ArrayList<Dish> dishes = main.loadDishes(path);
+        try {
+            if (dishes == null){
+                throw new Exception("Dish ArrayList is null, cannot set UI");
+            }
+            spinner = root.findViewById(R.id.foodSpinner);
 
-        spinner = root.findViewById(R.id.foodSpinner);
+            // Create ArrayAdapter for spinner and use previously loaded dishes, handle if dishes are null
+            adapter = new ArrayAdapter<Dish>(getContext(), android.R.layout.simple_spinner_item, dishes);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Create ArrayAdapter for spinner and use previously loaded dishes
+            // Menu list temp, add dishes to this and assign to user via main class method
+            tempMenuList = new ArrayList<>();
 
-        ArrayAdapter<Dish> adapter = new ArrayAdapter<Dish>(getContext(), android.R.layout.simple_spinner_item, dishes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Create adapter for listview to update based on selection + button.
+            itemsAdapter = new ArrayAdapter<Dish>(getContext(), android.R.layout.simple_list_item_1, tempMenuList);
+            listView = root.findViewById(R.id.mealsToday);
+            listView.setAdapter(itemsAdapter);
 
-        // Menu list temp, add dishes to this and assign to user via main class method
+        } catch (Exception e){
+            System.out.println("Something went wrong while loading dishes");
+            e.printStackTrace();
+            return root;
+        }
 
-        ArrayList<Dish> tempMenuList = new ArrayList<>();
-
-        // Create adapter for listview to update based on selection + button.
-
-        ArrayAdapter<Dish> itemsAdapter = new ArrayAdapter<Dish>(getContext(), android.R.layout.simple_list_item_1, tempMenuList);
-        listView = root.findViewById(R.id.mealsToday);
-        listView.setAdapter(itemsAdapter);
-
-        PercentageChartView ringChart = root.findViewById(R.id.view_id);
-        Double co2Goal = main.getCurrentUserTergetCo2Value()*1000/365;
-
-        double cumSum = 0;
+        ringChart = root.findViewById(R.id.view_id);
+        co2Goal = main.getCurrentUserTergetCo2Value() * 1000 / 365;
 
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,7 +117,9 @@ public class HomeFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
         });
+
 
         button = root.findViewById(R.id.addButton);
         button.setOnClickListener(new View.OnClickListener() {

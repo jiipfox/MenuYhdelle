@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public class UserLocalStorage {
     private static String filename = "user.json";
-    private ArrayList<User> userList = new ArrayList<>(); // todo replace with seeking the data from test.json
+    private ArrayList<User> userList = new ArrayList<>();
     FileWriterReader io = new FileWriterReader();
     //private File path;
 
@@ -45,7 +45,7 @@ public class UserLocalStorage {
     /**
      * Get path from context, create user list from json and store it locally
      *
-     * @param path , app context files directory
+     * @param definedPath , app context files directory
      * @return
      */
     public boolean readJson(File definedPath) {
@@ -112,6 +112,13 @@ public class UserLocalStorage {
             return false;
         }
 
+        // For some reason if userlist is null, make some dummy user.
+        if (userList == null){
+            String dummy = "[{\"co2AnnualOjbective\":0.0, \"co2Cumulative\":0.0, \"password\":\"1\", \"userMenus\":[{\"date\":\"Jan 1, 1970 6:56:48 PM\", \"dishes\":[{\"diet\":\"\", \"ingredients\":[{\"co2\":0.0,\"name\":\"1\",\"price\":1,\"unitOfMeasure\":\"g\"}], \"name\":\"K\",\"recipe\":\"K\",\"type\":\"R\"}], \"name\":\"Erikois\"}], \"userName\":\"Teppo\"}]";
+            userList = JsonToUserList(dummy);
+            System.out.println("Name und drang " + userList.get(0).getUserName());
+        }
+
         try{
             User newUser = new User(name, pass, co2obj);
             userList.add(newUser);
@@ -127,33 +134,35 @@ public class UserLocalStorage {
     public User loginUser(String loginName, String loginPass) {
         User user;
         boolean passOk = false;
-        System.out.println("login=" + loginName + ", pass=" + loginPass);
-        System.out.println("size=" + userList.size());
-
-        if (userList == null) {
-            System.out.println("Empty user list, add more users.");
-            return null;
-        }
-
-        if (userList.size() <= 0) {
-            System.out.println("Empty user list, add more users.");
-            return null;
-        }
-
-        for (int i = 0; i < userList.size(); i++) {
-            String userName = userList.get(i).getUserName();
-            System.out.println("User("+i+")=" + userName);
-            if (userName.equals(loginName)) {
-                System.out.println("Login user name found from index " + i);
-                passOk = verifyPassword(userList.get(i).getPassword(), loginPass);
-                if (passOk) {
-                    user = userList.get(i);
-                    return user;
-                } else {
-                    System.out.println("Wrong password!");
-                }
-                break;
+        try {
+            if (userList == null) {
+                System.out.println("Empty user list, add more users.");
+                return null;
             }
+
+            if (userList.size() <= 0) {
+                System.out.println("Empty user list, add more users.");
+                return null;
+            }
+
+            for (int i = 0; i < userList.size(); i++) {
+                String userName = userList.get(i).getUserName();
+                if (userName.equals(loginName)) {
+                    System.out.println("Login user name found from index " + i);
+                    passOk = verifyPassword(userList.get(i).getPassword(), loginPass);
+                    if (passOk) {
+                        user = userList.get(i);
+                        return user;
+                    } else {
+                        System.out.println("Wrong password!");
+                    }
+                    break;
+                }
+            }
+        } catch (Exception e){
+            System.out.println("Error while creating user!");
+            e.printStackTrace();
+            return null;
         }
         return null;
     }
@@ -303,5 +312,4 @@ public class UserLocalStorage {
         }
         return user;
     }
-
 }

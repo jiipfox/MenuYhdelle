@@ -9,25 +9,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.menuyhdelle.ListViewAdapter;
+import com.example.menuyhdelle.MainClass;
+import com.example.menuyhdelle.Menu;
+import com.example.menuyhdelle.R;
+
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.example.menuyhdelle.Dish;
-import com.example.menuyhdelle.Menu;
-import com.example.menuyhdelle.ListViewAdapter;
-import com.example.menuyhdelle.MainClass;
-import com.example.menuyhdelle.R;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class HistoryFragment extends Fragment {
     
@@ -48,11 +39,8 @@ public class HistoryFragment extends Fragment {
         lview.setAdapter(adapter);
 
         // Update listview adapter as the items have been created within the list
-
         adapter.notifyDataSetChanged();
-
         lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
