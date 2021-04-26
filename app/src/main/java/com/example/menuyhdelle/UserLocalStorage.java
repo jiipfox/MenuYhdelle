@@ -96,7 +96,7 @@ public class UserLocalStorage {
      * - password verification
      * - check if user is already created, problems in the login phase otherwise
      */
-    public boolean createUser(String name, String pass, double co2obj) {
+    public boolean createUser(String name, String pass, double co2obj, String fullName, boolean preferLowCo2) {
         if (isValidName(name) == false) {
             System.out.println("Invalid user name.");
             return false;
@@ -120,7 +120,7 @@ public class UserLocalStorage {
         }
 
         try{
-            User newUser = new User(name, pass, co2obj);
+            User newUser = new User(name, pass, co2obj, fullName, preferLowCo2);
             userList.add(newUser);
             System.out.println("User list size in LoginActivity = " + userList.size());
         } catch (NullPointerException ei){

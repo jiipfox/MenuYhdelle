@@ -10,12 +10,9 @@ import android.view.View;
 import com.example.menuyhdelle.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
-import java.lang.reflect.Array;
 
-import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -57,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReadXML.readTheatreAreaXML(getApplicationContext(), view);
+                String preferLowCo = String.valueOf(main.getCo2Prefer());
+                ReadXML.readAverageCo2(getApplicationContext(), view, preferLowCo);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

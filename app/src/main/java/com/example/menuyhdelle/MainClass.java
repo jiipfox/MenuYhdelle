@@ -78,9 +78,9 @@ public class MainClass {
      * Abstraction of user backend, create new function
      * @return true if succesfull
      */
-    public boolean createNewUser(String name, String pass, double co2obj)
+    public boolean createNewUser(String name, String pass, double co2obj, String fullName, boolean preferLowCo2)
     {
-        if (userBackEnd.createUser(name, pass, co2obj)){
+        if (userBackEnd.createUser(name, pass, co2obj, fullName, preferLowCo2)){
             return true;
         } else {
             System.out.println("Cannot create user");
@@ -149,6 +149,12 @@ public class MainClass {
     public String getUserName(){
         return currentUser.getUserName();
     }
+
+    public String getUserFullName(){ return currentUser.getFullName(); }
+
+    public boolean getCo2Prefer(){ return currentUser.getPreferLowCo(); }
+
+    public double getCo2Goal() { return currentUser.getCo2AnnualOjbective(); }
 
     public void logoutUser() {
 

@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
+import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.R;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class ProfileFragment extends Fragment {
 
         private ProfileViewModel profileViewModel;
+        MainClass main = MainClass.getMain();
 
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
@@ -26,10 +26,9 @@ public class ProfileFragment extends Fragment {
             final EditText userName = root.findViewById(R.id.userName);
             final EditText co2Goal = root.findViewById(R.id.co2Goal);
 
-            String uName = userName.getText().toString();
-            String coGoal = co2Goal.getText().toString();
-
-            // GET AND SET USER INFORMATION METHODS HERE BY CLICKING BUTTON
+            userName.setText(main.getUserFullName());
+            co2Goal.setText(String.valueOf(main.getCo2Goal()));
+            boolean preferLowCo = main.getCo2Prefer();
 
             return root;
         }

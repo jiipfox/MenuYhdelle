@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Find elements by their ID's.
-
         createUserBtn = findViewById(R.id.createUser);
         alrdyHaveUser = findViewById(R.id.alrdyHaveUser);
         editTextCO2 = findViewById(R.id.editTextCO2);
@@ -48,25 +47,25 @@ public class RegisterActivity extends AppCompatActivity {
         createUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String fullName = editTextName.getText().toString();
                 String name = editTextUser.getText().toString();
                 String pass = editTextPassword.getText().toString(); // todo where to hash?
                 double co2Obj = Double.parseDouble(editTextCO2.getText().toString());
-                boolean bool = checkBox.isChecked();
+                boolean boolPreferLowCo = checkBox.isChecked();
 
                 String coStr = editTextCO2.getText().toString();
-                String boolStr = String.valueOf(bool);
+                String stringPreferLowCo = String.valueOf(boolPreferLowCo);
 
-                if(name.isEmpty() | pass.isEmpty() | coStr.isEmpty() | boolStr.isEmpty()){
+                if(name.isEmpty() | pass.isEmpty() | coStr.isEmpty() | stringPreferLowCo.isEmpty()){
                     makeToast("Täytä kaikki tarvittavat kentät!");
                 }
 
                 // Call abstraction, create new user and store the database
-                if (main.createNewUser(name, pass, co2Obj)){
+                if (main.createNewUser(name, pass, co2Obj, fullName, boolPreferLowCo)){
                     System.out.println("New user created.");
 
                     // Save user to database and display toast "User successfully created" or some error
                     // if any of the fields are left unfinished.
-
                     main.saveDb(getApplicationContext().getFilesDir());
                     makeToast("Käyttäjä luotu, kirjaudu sisään palaamalla kirjautumissivulle.");
                 } else {
@@ -79,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // This method will change view to LoginActivity if user clicks alrdyHaveUser button.
-
     public void changeView(View v) {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivityForResult(intent, 1);

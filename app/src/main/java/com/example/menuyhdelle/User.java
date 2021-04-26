@@ -12,13 +12,16 @@ public class User {
     private double co2AnnualOjbective = 0.0;
     private double co2Cumulative = 0.0;
     private ArrayList<Menu> userMenus;
-    private static int counter;
+    private String fullName = "";
+    private boolean preferLowCo = false;
 
-    public User(String name, String pass, Double objective){
+    public User(String name, String pass, Double objective, String allNames, Boolean lowCoSelected){
         this.userName = name;
         this.password = pass;
         this.co2AnnualOjbective = objective;
         this.userMenus = new ArrayList<>();
+        this.fullName = allNames;
+        this.preferLowCo = lowCoSelected;
         System.out.println("New user created: " + this.userName);
     }
 
@@ -33,6 +36,10 @@ public class User {
     public double getCo2AnnualOjbective(){
         return co2AnnualOjbective;
     }
+
+    public String getFullName(){ return this.fullName;}
+
+    public boolean getPreferLowCo() {return this.preferLowCo;}
 
     public double getCo2Cumulative(){
         return co2Cumulative;

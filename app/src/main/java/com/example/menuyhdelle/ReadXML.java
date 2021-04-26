@@ -23,17 +23,26 @@ public class ReadXML {
     private static ArrayList theatreArrayList;
     private String referenceCo2Target2 = "";
     private static DecimalFormat df = new DecimalFormat("0.00");
+    //MainClass main = MainClass.getMain();
+    //String getCo2Prefer = main.getCo2Prefer;
 
     /**
-     * Read url rest json using from defined url using volley api. Put request on the queue and after
-     * response pick the Total CO2 and return. Handle exceptions todo.
+     * Read url rest json using from defined url using volley api. Put request on the queue and after response pick the Total CO2 and return. Handle exceptions todo.
      *
      * @param c context for the RequestQueue, v for updating the Snackbar text
      */
-    public static void readTheatreAreaXML(Context c, View v) {
+
+    /**
+     * Read url rest json using from defined url using volley api. Put request on the queue and
+     * after response pick the Total CO2 and return. Handle exceptions todo.
+     * @param c context
+     * @param v view
+     * @param preferLowCo user prefered selection of low co2 food production
+     */
+    public static void readAverageCo2(Context c, View v, String preferLowCo) {
         final String[] referenceCo2Target = {""};
         RequestQueue queue = Volley.newRequestQueue(c);
-        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/FoodCalculator?query.diet=omnivore&query.lowCarbonPreference=true&query.beefLevel=100&query.fishLevel=100&query.porkPoultryLevel=100&query.dairyLevel=100&query.cheeseLevel=100&query.riceLevel=100&query.eggLevel=100&query.winterSaladLevel=100&query.restaurantSpending=100";
+        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/FoodCalculator?query.diet=omnivore&query.lowCarbonPreference="+preferLowCo+"&query.beefLevel=100&query.fishLevel=100&query.porkPoultryLevel=100&query.dairyLevel=100&query.cheeseLevel=100&query.riceLevel=100&query.eggLevel=100&query.winterSaladLevel=100&query.restaurantSpending=100";
         FloatingActionButton fab = v.findViewById(R.id.fab);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -44,7 +53,7 @@ public class ReadXML {
                     int failure = obj.optInt("failure");
                     referenceCo2Target[0] = obj.getString("Total");
                     double refTarget = Double.parseDouble(referenceCo2Target[0]);
-                    Snackbar.make(v, "Tiesitkö, että suomalaisen keskimääräinen hiilijalanjälki on " + df.format(refTarget) + "kg CO2 vuodessa?", Snackbar.LENGTH_LONG)
+                    Snackbar.make(v, "Ruoasta aiheutunut keskimääräinen hiilijalanjälki valintojesi pohjalta suomessa on " + df.format(refTarget) + "kg CO2 vuodessa?", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
