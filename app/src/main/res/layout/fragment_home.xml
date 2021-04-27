@@ -18,42 +18,9 @@
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/linlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/dayBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/purple_200"
-                android:text="Päivä" />
-
-            <Button
-                android:id="@+id/weekBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/purple_200"
-                android:text="Viikko" />
-
-            <Button
-                android:id="@+id/monthBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/purple_200"
-                android:text="Kuukausi" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="50dp"
             android:gravity="center"
             android:layout_alignStart="@+id/linlay">
 
@@ -69,18 +36,57 @@
                 android:textColor="#FFF"
                 android:textSize="18dp" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Viikko"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="2"/>
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Päivä"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="2"/>
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Kuukausi"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="2"/>
+        </LinearLayout>
 
         <LinearLayout
-
+            android:id="@+id/linlay2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
             android:gravity="center">
-
             <com.ramijemli.percentagechartview.PercentageChartView
-                android:id="@+id/view_id"
+                android:id="@+id/view_weekly"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_weight="2"
                 app:pcv_mode="ring"
                 app:pcv_orientation="clockwise"
                 app:pcv_animDuration="800"
@@ -89,8 +95,40 @@
                 app:pcv_startAngle="270"
                 app:pcv_backgroundBarColor="@color/purple_700"
                 app:pcv_textSize="20dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_margin="5dp"/>
+            <com.ramijemli.percentagechartview.PercentageChartView
+                android:id="@+id/view_daily"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                app:pcv_mode="ring"
+                app:pcv_orientation="clockwise"
+                app:pcv_animDuration="800"
+                app:pcv_animInterpolator="anticipate_overshoot"
+                app:pcv_progress="0"
+                app:pcv_startAngle="270"
+                app:pcv_backgroundBarColor="@color/purple_700"
+                app:pcv_textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"/>
+            <com.ramijemli.percentagechartview.PercentageChartView
+                android:id="@+id/view_monthly"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                app:pcv_mode="ring"
+                app:pcv_orientation="clockwise"
+                app:pcv_animDuration="800"
+                app:pcv_animInterpolator="anticipate_overshoot"
+                app:pcv_progress="0"
+                app:pcv_startAngle="270"
+                app:pcv_backgroundBarColor="@color/purple_700"
+                app:pcv_textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"/>
         </LinearLayout>
+
 
     </RelativeLayout>
 

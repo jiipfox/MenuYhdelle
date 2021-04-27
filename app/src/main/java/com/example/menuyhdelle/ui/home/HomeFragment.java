@@ -44,14 +44,16 @@ public class HomeFragment extends Fragment {
     private Button button, genButton;
     private ListView listView;
     private ArrayList<Dish> tempMenuList = new ArrayList<>();
+    private Double cumSum = 0.0;
+    private double dailySum = 0.0;
     MainClass main = MainClass.getMain();
+    private Double co2Goal = 0.0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ArrayAdapter<Dish> adapter;
         ArrayList<Dish> tempMenuList;
         ArrayAdapter<Dish> itemsAdapter;
-        PercentageChartView ringChart;
-        Double co2Goal;
+        PercentageChartView ringChart, ringChartWeekly, ringChartMonthly;
         try {
             Double co2Target = ((MainActivity) getActivity()).getCurrentUserCo2Target();
             if (co2Target > 0.0){
@@ -103,8 +105,11 @@ public class HomeFragment extends Fragment {
             return root;
         }
 
-        ringChart = root.findViewById(R.id.view_id);
-        co2Goal = main.getCurrentUserTergetCo2Value() * 1000 / 365;
+        ringChart = root.findViewById(R.id.view_daily);
+        ringChartWeekly = root.findViewById(R.id.view_weekly);
+        ringChartMonthly = root.findViewById(R.id.view_monthly);
+
+        EditText eText = root.findViewById(R.id.pickDate);
 
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -120,27 +125,32 @@ public class HomeFragment extends Fragment {
 
         });
 
-
         button = root.findViewById(R.id.addButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dish dish = (Dish) spinner.getSelectedItem();
-                // Add dish / dishname to array and finally update listView adapter
-                tempMenuList.add(dish);
-                itemsAdapter.notifyDataSetChanged();
-                double cumSum = 0.0;
-                for (Dish i : tempMenuList){
-                    double temp = i.getCO2();
-                    cumSum += temp;
+                if (co2Goal == 0.0 | eText.getText().toString().isEmpty()){
+                    makeToast("Valitse päivä!");
+                } else if (dailySum > co2Goal){
+                    makeToast("Päivittäinen päästömäärä on täynnä.");
                 }
-                double percentageOfTotal = cumSum/co2Goal;
-                makeToast("Lisätty ateria: " + dish.getName() + " CO2: " + dish.getCO2() +"\n"
-                        + "Päivittäistä kulutusta jäljellä: " + (co2Goal-cumSum));
-                try {
-                    ringChart.setProgress((float) percentageOfTotal, true);
-                } catch (IllegalArgumentException e){
-                    makeToast("Päivittäinen päästömäärä täynnä tai se menisi yli tämän aterian jälkeen.");
+                else {
+                    co2Goal = main.getCurrentUserTergetCo2Value()/365;
+                    Dish dish = (Dish) spinner.getSelectedItem();
+                    // Add dish / dishname to array and finally update listView adapter
+                    tempMenuList.add(dish);
+                    dailySum += dish.getCO2();
+                    itemsAdapter.notifyDataSetChanged();
+                    cumSum += dish.getCO2();
+                    double percentageOfTotal = (dailySum / co2Goal)*100;
+
+                    makeToast("Lisätty ateria: " + dish.getName() + " CO2: " + dish.getCO2() + "\n" + "Tänään jäljellä: " +
+                            (co2Goal-dailySum));
+                    try {
+                        ringChart.setProgress((float) percentageOfTotal, true);
+                    } catch (IllegalArgumentException e) {
+                        makeToast("Päivittäinen päästömäärä menisi yli tämän aterian jälkeen.");
+                    }
                 }
             }
         });
@@ -152,7 +162,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println("CLICKED CLICK");
                 Double co2 = 0.0;
-                EditText eText = root.findViewById(R.id.pickDate);
 
                 // Generate menu and get CO2 of each dish, save information on current user's JSON
                 // for later use.
@@ -168,17 +177,19 @@ public class HomeFragment extends Fragment {
                     co2 = erikoisMenu.getCO2();
                     System.out.println("Hiilidioksiidit käyttäjillle = " + co2);
                     main.assignMenuToCurrentUser(erikoisMenu);
+                    Double cumulative = cumSum;
+                    main.setCurrentUserCumCo2(cumulative);
                     main.saveDb(path);
                     makeToast("Menu luotu ja tallennettu.");
                     itemsAdapter.clear();
                     ringChart.setProgress(0, true);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        EditText eText = root.findViewById(R.id.pickDate);
         eText.setInputType(InputType.TYPE_NULL);
         eText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,12 +204,14 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                co2Goal = main.getCurrentUserTergetCo2Value()/365;
+                                dailySum = 0.0;
+                                ringChart.setProgress(0, true);
                             }
+
                         }, year, month, day);
                 picker.show();
                 itemsAdapter.clear();
-                ringChart.setProgress(0, true);
-
             }
         });
         return root;
