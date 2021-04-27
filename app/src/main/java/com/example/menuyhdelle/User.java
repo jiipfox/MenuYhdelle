@@ -57,21 +57,16 @@ public class User {
         co2AnnualOjbective = objective;
     }
 
+    /**
+     * Assign menu to user and increase co2 cumulative value
+     * @param m menu
+     */
     public void setMenus(Menu m){
-
         this.userMenus.add(m);
+        this.co2Cumulative = this.co2Cumulative + m.getCO2();
     }
+
     public ArrayList<Menu> getMenus(){
         return this.userMenus;
-    }
-
-    /**
-     * Increase co2 cumulative value with addedCo2
-     * @param addedCO2
-     * @return cumulative co2 value after addition
-     */
-    public double increaseCo2(double addedCO2){
-        co2Cumulative = co2Cumulative + addedCO2;
-        return  co2Cumulative;
     }
 }

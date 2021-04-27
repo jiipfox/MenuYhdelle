@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
                     makeToast("Päivittäinen päästömäärä on täynnä.");
                 }
                 else {
-                    co2Goal = main.getCurrentUserTergetCo2Value()/365;
+                    co2Goal = main.getCurrentUserTargetCo2Value()/365;
                     Dish dish = (Dish) spinner.getSelectedItem();
                     // Add dish / dishname to array and finally update listView adapter
                     tempMenuList.add(dish);
@@ -160,30 +160,25 @@ public class HomeFragment extends Fragment {
         genButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("CLICKED CLICK");
                 Double co2 = 0.0;
 
                 // Generate menu and get CO2 of each dish, save information on current user's JSON
                 // for later use.
-
                 try {
                     Date created = new SimpleDateFormat("dd/MM/yyyy").parse(eText.getText().toString());
-                    for (int i = 0; i < tempMenuList.size(); i++){
-                        System.out.println("("+i+") = " + tempMenuList.get(i).getName());
-                        System.out.println("   co2 = " + tempMenuList.get(i).getCO2());
-                    }
-                    //created.setTime(1619270879*1000); // epoch time 24.4.21 in ms
-                    Menu erikoisMenu = new Menu("Erikois", tempMenuList, created);
+                    Menu erikoisMenu = new Menu("Ruoka", tempMenuList, created);
+
+                    System.out.println("Before: " + main.getCurrentUserCumulativeCo2());
                     co2 = erikoisMenu.getCO2();
-                    System.out.println("Hiilidioksiidit käyttäjillle = " + co2);
+                    System.out.println("Co2 of menu: " + co2);
                     main.assignMenuToCurrentUser(erikoisMenu);
-                    Double cumulative = cumSum;
-                    main.setCurrentUserCumCo2(cumulative);
+                    System.out.println("After: " + main.getCurrentUserCumulativeCo2());
+
                     main.saveDb(path);
+
                     makeToast("Menu luotu ja tallennettu.");
                     itemsAdapter.clear();
                     ringChart.setProgress(0, true);
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -204,7 +199,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                co2Goal = main.getCurrentUserTergetCo2Value()/365;
+                                co2Goal = main.getCurrentUserTargetCo2Value()/365;
                                 dailySum = 0.0;
                                 ringChart.setProgress(0, true);
                             }

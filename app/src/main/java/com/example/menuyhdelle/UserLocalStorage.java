@@ -20,16 +20,7 @@ public class UserLocalStorage {
     private static String filename = "user.json";
     private ArrayList<User> userList = new ArrayList<>();
     FileWriterReader io = new FileWriterReader();
-    Krypto krypt1x;
 
-    // Create passphrase for encoding and decoding
-    public UserLocalStorage(){
-        try {
-            krypt1x = new Krypto("salasana123");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * Get path from context, create json string from the users list and store it to file
      *
@@ -102,7 +93,7 @@ public class UserLocalStorage {
 
         // Encode password using given passphrase
         try {
-            encodedPass = krypt1x.encrypt(pass);
+            encodedPass = BCrypt.hashpw(pass, BCrypt.gensalt());
             System.out.println("encoded pass = " + encodedPass);
         } catch (Exception e) {
             System.out.println("Can't encode user password! Do what?");
@@ -166,7 +157,7 @@ public class UserLocalStorage {
                 }
             }
         } catch (Exception e){
-            System.out.println("Error while creating user!");
+            System.out.println("Error when trying to login user!");
             e.printStackTrace();
             return null;
         }
@@ -180,16 +171,8 @@ public class UserLocalStorage {
      * @return
      */
     private boolean verifyPassword(String pass, String loginPass) {
-        String decoded;
-
-        try {
-            decoded = krypt1x.decrypt(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        if (decoded.equals(loginPass)) {
+        System.out.println("pass="+pass+", loginPass="+loginPass);
+        if (BCrypt.checkpw(loginPass, pass)) {
             return true;
         } else {
             return false;
@@ -226,7 +209,7 @@ public class UserLocalStorage {
                     "(?=.*[a-z])" +         //at least 1 lower case letter
                     "(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=.*[@#$%^&+=!?¤}{])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
                     ".{6,}" +               //at least 6 characters
                     "$");

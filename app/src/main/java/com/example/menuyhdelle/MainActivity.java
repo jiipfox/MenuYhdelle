@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Double getCurrentUserCo2Target(){
-        return main.getCurrentUserTergetCo2Value();
+        return main.getCurrentUserTargetCo2Value();
     }
     public File fuckThePath(){
         return getApplicationContext().getFilesDir();

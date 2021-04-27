@@ -1,7 +1,5 @@
 package com.example.menuyhdelle;
 
-import android.content.Context;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,10 +7,8 @@ import java.util.Date;
 public class MainClass {
     static private MainClass main = null;
     private ArrayList<Menu> menuList = new ArrayList<>();
-        // private ArrayList<Class> shoppingLists = new ArrayList<>();
+
     private User currentUser;
-    private File path;
-    private Context appContext;
     UserLocalStorage userBackEnd = new UserLocalStorage();
     StuffLocalStorage stuffBackEnd = new StuffLocalStorage();
 
@@ -123,7 +119,7 @@ public class MainClass {
     }
 
     /**
-     * Assign Menu m to logged in User
+     * Assign Menu m to logged in User and increase co2
      * @return true if successful
      */
     public boolean assignMenuToCurrentUser(Menu m){
@@ -174,10 +170,30 @@ public class MainClass {
         this.menuList = menuList;
     }
 
-    public Double getCurrentUserTergetCo2Value(){
+    public Double getCurrentUserTargetCo2Value(){
         if (currentUser == null){
             System.out.println("No user defined!");
+            return 0.0;
         }
         return currentUser.getCo2AnnualOjbective();
+    }
+
+    public Double getCurrentUserCumulativeCo2(){
+        if (currentUser == null){
+            System.out.println("No user defined!");
+            return 0.0;
+        }
+        return currentUser.getCo2Cumulative();
+    }
+
+    /**
+     * Stupid design needs path because of need for user storage. todo not needed anymore?
+     * @param amount
+     */
+    public void storeNewUserCo2Cumulative(Double amount){
+        if (currentUser == null){
+            System.out.println("No user defined!");
+            return;
+        }
     }
 }
