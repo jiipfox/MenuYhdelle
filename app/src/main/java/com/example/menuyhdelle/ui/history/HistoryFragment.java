@@ -14,6 +14,7 @@ import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class HistoryFragment extends Fragment {
 
         ListView lview = root.findViewById(R.id.listview);
         ListViewAdapter adapter = new ListViewAdapter(this.getActivity(), menuList);
+
         lview.setAdapter(adapter);
 
         // Update listview adapter as the items have been created within the list

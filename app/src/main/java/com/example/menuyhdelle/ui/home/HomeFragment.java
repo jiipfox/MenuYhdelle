@@ -94,8 +94,6 @@ public class HomeFragment extends Fragment {
         }
 
         ringChart = root.findViewById(R.id.view_daily);
-        ringChartWeekly = root.findViewById(R.id.view_weekly);
-        ringChartMonthly = root.findViewById(R.id.view_monthly);
 
         EditText eText = root.findViewById(R.id.pickDate);
 
@@ -184,6 +182,8 @@ public class HomeFragment extends Fragment {
                     makeToast("Menu luotu ja tallennettu.");
                     itemsAdapter.clear();
                     ringChart.setProgress(0, true);
+
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -221,4 +221,5 @@ public class HomeFragment extends Fragment {
         Toast toast = Toast.makeText(getContext(),text,Toast.LENGTH_SHORT);
         toast.show();
     }
+
 }

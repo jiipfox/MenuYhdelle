@@ -81,9 +81,9 @@
                     android:id="@+id/editTextCO2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="CO2 tavoite (tonnia/vuosi)"
+                    android:hint="CO2 tavoite (esim. 2000 kg/vuosi)"
                     android:inputType="textPersonName"
-                    android:text="7.5"
+                    android:text="2000"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout

@@ -45,35 +45,16 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/week"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Viikko"
-                android:textColor="#FFF"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="2"/>
-            <TextView
                 android:id="@+id/day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Päivä"
+                android:text="Päivätavoitteesta täynnä:"
                 android:textColor="#FFF"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="2"/>
-            <TextView
-                android:id="@+id/month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Kuukausi"
-                android:textColor="#FFF"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="2"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -82,21 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
             android:gravity="center">
-            <com.ramijemli.percentagechartview.PercentageChartView
-                android:id="@+id/view_weekly"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="2"
-                app:pcv_mode="ring"
-                app:pcv_orientation="clockwise"
-                app:pcv_animDuration="800"
-                app:pcv_animInterpolator="anticipate_overshoot"
-                app:pcv_progress="0"
-                app:pcv_startAngle="270"
-                app:pcv_backgroundBarColor="@color/purple_700"
-                app:pcv_textSize="20dp"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"/>
+
             <com.ramijemli.percentagechartview.PercentageChartView
                 android:id="@+id/view_daily"
                 android:layout_width="100dp"
@@ -112,21 +79,7 @@
                 app:pcv_textSize="20dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"/>
-            <com.ramijemli.percentagechartview.PercentageChartView
-                android:id="@+id/view_monthly"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="2"
-                app:pcv_mode="ring"
-                app:pcv_orientation="clockwise"
-                app:pcv_animDuration="800"
-                app:pcv_animInterpolator="anticipate_overshoot"
-                app:pcv_progress="0"
-                app:pcv_startAngle="270"
-                app:pcv_backgroundBarColor="@color/purple_700"
-                app:pcv_textSize="20dp"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"/>
+
         </LinearLayout>
 
 
