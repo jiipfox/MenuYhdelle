@@ -16,15 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class ReadXML {
 
-    private static ArrayList theatreArrayList;
     private String referenceCo2Target2 = "";
     private static DecimalFormat df = new DecimalFormat("0.00");
-    //MainClass main = MainClass.getMain();
-    //String getCo2Prefer = main.getCo2Prefer;
 
     /**
      * Read url rest json using from defined url using volley api. Put request on the queue and after response pick the Total CO2 and return. Handle exceptions todo.
@@ -70,14 +66,6 @@ public class ReadXML {
 
                 });
         queue.add(stringRequest);
-    }
-
-    public String getco2(){
-        return this.referenceCo2Target2;
-    }
-
-    private void setCo2(String co2){
-        this.referenceCo2Target2 = co2;
     }
 
 }
