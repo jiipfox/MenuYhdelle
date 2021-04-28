@@ -38,6 +38,8 @@ public class Dish {
         Double ingredientsCo2 = 0.0;
         if (this.ingredients != null){
             for (int i = 0; i < this.ingredients.size(); i++){
+                System.out.println("ing = " + this.ingredients.get(i).getName());
+                System.out.println("co2 = " + this.ingredients.get(i).getCo2());
                 ingredientsCo2 = ingredientsCo2 + this.ingredients.get(i).getCo2();
             }
         }

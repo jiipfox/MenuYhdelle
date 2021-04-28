@@ -129,25 +129,42 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (co2Goal == 0.0 | eText.getText().toString().isEmpty()){
+                Float percentageOfTotal;
+                Dish dish = null;
+                co2Goal = main.getCurrentUserTargetCo2Value()/365; // kg or g?
+
+                if (eText.getText().toString().isEmpty()){
                     makeToast("Valitse päivä!");
-                } else if (dailySum > co2Goal){
-                    makeToast("Päivittäinen päästömäärä on täynnä.");
                 }
                 else {
-                    co2Goal = main.getCurrentUserTargetCo2Value()/365;
-                    Dish dish = (Dish) spinner.getSelectedItem();
-                    // Add dish / dishname to array and finally update listView adapter
+                    // Get dish from the spinner menu and add to menu list
+                    dish = (Dish) spinner.getSelectedItem();
                     tempMenuList.add(dish);
-                    dailySum += dish.getCO2();
-                    itemsAdapter.notifyDataSetChanged();
-                    cumSum += dish.getCO2();
-                    double percentageOfTotal = (dailySum / co2Goal)*100;
 
-                    makeToast("Lisätty ateria: " + dish.getName() + " CO2: " + dish.getCO2() + "\n" + "Tänään jäljellä: " +
-                            (co2Goal-dailySum));
+                    // Calculate daily sum and present percentage from the total
+                    dailySum = dailySum + dish.getCO2();
+                    percentageOfTotal = (float)((dailySum / co2Goal)*100.0);
+
+                    // Notify user but let them eat
+                    if (percentageOfTotal >= 100) {
+                        makeToast("Ylittävä ateria lisätty: " + dish.getName() + " CO2: " + dish.getCO2() + "\n" + "Tänään jäljellä: " +
+                                (co2Goal-dailySum));
+                        percentageOfTotal = (float)100.0;
+                    }else {
+                        makeToast("Ateria lisätty: " + dish.getName() + " CO2: " + dish.getCO2() + "\n" + "Tänään jäljellä: " +
+                                (co2Goal-dailySum));
+                    }
+
+                    // Debugs
+                    System.out.println("daily sum = " + dailySum);
+                    System.out.println("daily goal = " + co2Goal);
+                    System.out.println("%="+ percentageOfTotal);
+
+                    // Update array adapter
+                    itemsAdapter.notifyDataSetChanged();
+
                     try {
-                        ringChart.setProgress((float) percentageOfTotal, true);
+                        ringChart.setProgress(percentageOfTotal, true);
                     } catch (IllegalArgumentException e) {
                         makeToast("Päivittäinen päästömäärä menisi yli tämän aterian jälkeen.");
                     }
