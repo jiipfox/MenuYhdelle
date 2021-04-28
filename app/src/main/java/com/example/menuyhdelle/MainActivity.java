@@ -93,14 +93,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-
-    public Double getCurrentUserCo2Target(){
-        return main.getCurrentUserTargetCo2Value();
-    }
-    public File fuckThePath(){
-        return getApplicationContext().getFilesDir();
-    }
-
-
-
 }

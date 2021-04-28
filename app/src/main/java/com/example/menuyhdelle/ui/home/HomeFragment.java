@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.menuyhdelle.Dish;
 import com.example.menuyhdelle.Ingredient;
-import com.example.menuyhdelle.MainActivity;
 import com.example.menuyhdelle.MainClass;
 import com.example.menuyhdelle.Menu;
 import com.example.menuyhdelle.R;
@@ -54,17 +53,6 @@ public class HomeFragment extends Fragment {
         ArrayList<Dish> tempMenuList;
         ArrayAdapter<Dish> itemsAdapter;
         PercentageChartView ringChart, ringChartWeekly, ringChartMonthly;
-        try {
-            Double co2Target = ((MainActivity) getActivity()).getCurrentUserCo2Target();
-            if (co2Target > 0.0){
-                System.out.println("User target co2 in home view = " + co2Target);
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Cannot retrieve co2 target value from Home view, or Co2 is zero");
-        }
 
         this.path = getContext().getApplicationContext().getFilesDir();
 
