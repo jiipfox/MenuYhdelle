@@ -1,0 +1,13 @@
+[
+{"co2":0.3,"name":"Omena","price":1.1,"unitOfMeasure":"g"},
+{"co2":2.3,"name":"Jauheliha","price":0.1,"unitOfMeasure":"kg"},
+{"co2":2.1,"name":"Kanafile","price":100.1,"unitOfMeasure":"10kg"},
+{"co2":0.001,"name":"Vesi","price":9.9,"unitOfMeasure":"dl"},
+{"co2":1.1,"name":"Voi","price":3,"unitOfMeasure":"g"},
+{"co2":0.3,"name":"Kaurahiutale","price":1.1,"unitOfMeasure":"g"},
+{"co2":0.9,"name":"Maito","price":2.3,"unitOfMeasure":"dl"},
+{"co2":0.41,"name":"Kikhernejauho","price":1.8,"unitOfMeasure":"g"},
+{"co2":0.81,"name":"Oluthiivahiutale","price":4.3,"unitOfMeasure":"g"},
+{"co2":0.12,"name":"Jäävuorisalaatti","price":4.3,"unitOfMeasure":"g"},
+{"co2":0.05,"name":"Kurkku","price":3.56,"unitOfMeasure":"kg"},
+{"co2":0.1,"name":"Tomaatti","price":5.1,"unitOfMeasure":"kg"}]
